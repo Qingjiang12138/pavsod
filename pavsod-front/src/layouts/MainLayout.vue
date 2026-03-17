@@ -2,10 +2,10 @@
 import { RouterLink, RouterView } from 'vue-router'
 
 const navItems = [
-  { path: '/', name: '首页', icon: '🏠' },
-  { path: '/detect', name: '开始检测', icon: '🔍' },
-  { path: '/records', name: '检测记录', icon: '📋' },
-  { path: '/profile', name: '个人中心', icon: '👤' },
+  { path: '/', name: '首页'},
+  { path: '/detect', name: '开始检测'},
+  { path: '/records', name: '检测记录'},
+  { path: '/profile', name: '个人中心' },
 ]
 </script>
 
@@ -24,7 +24,6 @@ const navItems = [
           class="nav-item"
           exact-active-class="nav-item--active"
         >
-          <span class="nav-icon">{{ item.icon }}</span>
           <span class="nav-text">{{ item.name }}</span>
         </RouterLink>
       </nav>
@@ -85,8 +84,8 @@ const navItems = [
 }
 
 .nav-item--active {
-  background: hsla(160, 100%, 37%, 0.15);
-  color: hsla(160, 100%, 37%, 1);
+  background: hsla(210, 80%, 45%, 0.12);
+  color: hsla(210, 80%, 45%, 1);
   font-weight: 500;
 }
 
