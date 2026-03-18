@@ -2,7 +2,7 @@
 
 毕业设计：Qingjiang Li
 
-前端运行：
+## 前端运行：
 
 ```sh
 npm install
