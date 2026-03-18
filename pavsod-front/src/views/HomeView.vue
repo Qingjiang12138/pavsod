@@ -70,14 +70,6 @@ const recentRecords = [
         color="green"
       />
       <StatsCard
-        label="平均 F-measure"
-        :value="statsData.quality.value"
-        :trend="statsData.quality.trend"
-        trendLabel="较上月"
-        icon="🎯"
-        color="purple"
-      />
-      <StatsCard
         label="累计处理时长"
         :value="statsData.duration.value"
         :unit="statsData.duration.unit"
@@ -152,7 +144,7 @@ const recentRecords = [
 /* 统计卡片网格 */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 }
 

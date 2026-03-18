@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import VideoUpload from '@/components/detect/VideoUpload.vue'
-import DetectionMetrics from '@/components/detect/DetectionMetrics.vue'
 import ResultVideo from '@/components/detect/ResultVideo.vue'
 import LLMEvaluation from '@/components/detect/LLMEvaluation.vue'
 </script>
@@ -13,9 +12,6 @@ import LLMEvaluation from '@/components/detect/LLMEvaluation.vue'
     </header>
 
     <div class="detect-content">
-      <!-- 检测指标 -->
-      <DetectionMetrics />
-
       <!-- 视频上传 -->
       <VideoUpload />
 
