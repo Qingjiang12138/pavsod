@@ -1,9 +1,22 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainLayout from '@/layouts/MainLayout.vue'
+import { isAuthenticated } from '@/stores/auth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/LoginView.vue'),
+      meta: { title: '登录', public: true },
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('@/views/RegisterView.vue'),
+      meta: { title: '注册', public: true },
+    },
     {
       path: '/',
       component: MainLayout,
@@ -35,6 +48,28 @@ const router = createRouter({
       ],
     },
   ],
+})
+
+// 路由守卫：检查登录状态
+router.beforeEach((to, from, next) => {
+  // 如果路由标记为 public，直接放行
+  if (to.meta.public) {
+    // 已登录用户访问登录/注册页，跳转到首页
+    if (isAuthenticated.value && (to.path === '/login' || to.path === '/register')) {
+      next('/')
+      return
+    }
+    next()
+    return
+  }
+
+  // 需要登录的页面，检查登录状态
+  if (!isAuthenticated.value) {
+    next('/login')
+    return
+  }
+
+  next()
 })
 
 export default router
