@@ -6,9 +6,6 @@
 
 ```sh
 cd pavsod_front
-```
-
-```sh
 npm install
 ```
 
