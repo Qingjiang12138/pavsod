@@ -1,7 +1,16 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import VideoUpload from '@/components/detect/VideoUpload.vue'
 import ResultVideo from '@/components/detect/ResultVideo.vue'
 import LLMEvaluation from '@/components/detect/LLMEvaluation.vue'
+
+const currentVideoType = ref<'2d' | 'panoramic' | null>(null)
+
+const handleUploadComplete = (file: File, videoType: '2d' | 'panoramic', targetFps: number) => {
+  currentVideoType.value = videoType
+  console.log('上传完成:', file.name, '类型:', videoType, '目标帧率:', targetFps)
+  // TODO: 调用后端接口进行实际检测，传递 targetFps 参数
+}
 </script>
 
 <template>
@@ -13,7 +22,7 @@ import LLMEvaluation from '@/components/detect/LLMEvaluation.vue'
 
     <div class="detect-content">
       <!-- 视频上传 -->
-      <VideoUpload />
+      <VideoUpload @upload-complete="handleUploadComplete" />
 
       <!-- 检测结果视频 -->
       <ResultVideo />
