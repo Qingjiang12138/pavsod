@@ -5,6 +5,10 @@
 ## 前端运行：
 
 ```sh
+cd pavsod_front
+```
+
+```sh
 npm install
 ```
 
