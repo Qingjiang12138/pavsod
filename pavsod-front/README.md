@@ -1,7 +1,7 @@
 # pavsod-front
 
 基于音频信息的视觉显著物体检测设计与实现
-前端代码
+## 前端运行：
 
 ## Project Setup
 
@@ -20,3 +20,4 @@ npm run dev
 ```sh
 npm run build
 ```
+## 后端运行：

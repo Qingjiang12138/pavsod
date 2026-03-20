@@ -1,13 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useAuth } from '@/stores/auth'
 import UserProfileCard from '@/components/profile/UserProfileCard.vue'
 import UserStats from '@/components/profile/UserStats.vue'
-import PreferencesSettings from '@/components/profile/PreferencesSettings.vue'
 import SecuritySettings from '@/components/profile/SecuritySettings.vue'
 import SupportLinks from '@/components/profile/SupportLinks.vue'
-
-const { logout } = useAuth()
 
 // 模拟用户数据
 const userData = ref({
@@ -87,8 +83,8 @@ const handleAbout = () => {
 }
 
 const handleLogout = () => {
-  // 调用登出方法，清除登录状态并跳转到登录页
-  logout()
+  console.log('退出登录')
+  // TODO: 调用登出接口，跳转登录页
 }
 </script>
 
