@@ -7,10 +7,10 @@ const route = useRoute()
 const { user, logout } = useAuth()
 
 const navItems = [
-  { path: '/', name: '首页', icon: '🏠' },
-  { path: '/detect', name: '开始检测', icon: '🔍' },
-  { path: '/records', name: '检测记录', icon: '📋' },
-  { path: '/profile', name: '个人中心', icon: '👤' },
+  { path: '/', name: '首页' },
+  { path: '/detect', name: '开始检测'},
+  { path: '/records', name: '检测记录'},
+  { path: '/profile', name: '个人中心'},
 ]
 
 // 当前页面标题
@@ -55,7 +55,6 @@ const displayName = computed(() => user.value?.username || '用户')
           class="nav-item"
           exact-active-class="nav-item--active"
         >
-          <span class="nav-icon">{{ item.icon }}</span>
           <span class="nav-text">{{ item.name }}</span>
         </RouterLink>
       </nav>

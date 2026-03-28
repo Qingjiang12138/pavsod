@@ -1,5 +1,6 @@
 package com.pavsod.pavsodbackend;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +12,8 @@ import java.util.Map;
 
 @SpringBootApplication
 @RestController
-@RequestMapping
+@RequestMapping("/demo")
+@MapperScan("com.pavsod.pavsodbackend.mapper")
 public class PavsodBackendApplication {
 
     public static void main(String[] args) {
