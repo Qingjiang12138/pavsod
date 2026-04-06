@@ -6,6 +6,8 @@ import common.Result;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -13,9 +15,16 @@ public class UserController {
     @Resource
     private UserService userService;
 
-    @PostMapping
-    public Result save(@RequestBody User user){
-        userService.save(user);
+//    @PostMapping
+//    public Result save(@RequestBody User user){
+//        userService.save(user);
+//        return Result.success();
+//    }
+
+    @PostMapping public Result print(@RequestBody Map<String, Object> data){
+        System.out.println(data.get("id"));
+        System.out.println(data.get("name"));
+
         return Result.success();
     }
 
