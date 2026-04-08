@@ -4,6 +4,8 @@ import com.pavsod.pavsodbackend.entity.User;
 import com.pavsod.pavsodbackend.service.UserService;
 import common.Result;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -21,7 +23,15 @@ public class UserController {
 //        return Result.success();
 //    }
 
-    @PostMapping public Result print(@RequestBody Map<String, Object> data){
+    @PostMapping("/register")
+    public Result register(@RequestBody @Validated User user){
+
+        userService.userRegister(user);
+        return Result.success();
+    }
+
+    @PostMapping
+    public Result print(@RequestBody Map<String, Object> data){
         System.out.println(data.get("id"));
         System.out.println(data.get("name"));
 

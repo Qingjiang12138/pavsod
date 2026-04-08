@@ -25,6 +25,14 @@ public class Result implements Serializable {
         return r;
     }
 
+    public static Result success(int code, String msg){
+        Result r = new Result();
+        r.setCode(code);
+        r.setMsg(msg);
+
+        return r;
+    }
+
     public static Result success(){
         Result r = new Result();
         r.setData(200);
@@ -38,6 +46,14 @@ public class Result implements Serializable {
 
     public static Result error(String msg){
         return error(400, msg, null);
+    }
+
+    public static Result error(int code, String msg){
+        Result r = new Result();
+        r.setMsg(msg);
+        r.setCode(code);
+
+        return r;
     }
 
     public static Result error(int code, String msg, Object data){
