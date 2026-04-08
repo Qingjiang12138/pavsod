@@ -1,1 +1,13 @@
+com\pavsod\pavsodbackend\dto\UserRegisterDTO.class
+com\pavsod\pavsodbackend\mapper\UserMapper.class
 com\pavsod\pavsodbackend\PavsodBackendApplication.class
+com\pavsod\pavsodbackend\service\UserService.class
+com\pavsod\pavsodbackend\entity\Salient_video.class
+com\pavsod\pavsodbackend\service\impl\UserServiceImpl.class
+common\Result.class
+com\pavsod\pavsodbackend\entity\Original_video.class
+com\pavsod\pavsodbackend\utils\MD5Util.class
+com\pavsod\pavsodbackend\entity\Task.class
+com\pavsod\pavsodbackend\entity\User.class
+com\pavsod\pavsodbackend\controller\UserController.class
+com\pavsod\pavsodbackend\exception\GlobalExceptionHandler.class

@@ -1,5 +1,6 @@
 package com.pavsod.pavsodbackend.controller;
 
+import com.pavsod.pavsodbackend.dto.UserRegisterDTO;
 import com.pavsod.pavsodbackend.entity.User;
 import com.pavsod.pavsodbackend.service.UserService;
 import common.Result;
@@ -24,12 +25,13 @@ public class UserController {
 //    }
 
     @PostMapping("/register")
-    public Result register(@RequestBody @Validated User user){
-
-        userService.userRegister(user);
+    public Result register(@RequestBody @Validated UserRegisterDTO dto){
+        userService.userRegister(dto);
         return Result.success();
     }
 
+
+    //以下是学习时候的代码
     @PostMapping
     public Result print(@RequestBody Map<String, Object> data){
         System.out.println(data.get("id"));
