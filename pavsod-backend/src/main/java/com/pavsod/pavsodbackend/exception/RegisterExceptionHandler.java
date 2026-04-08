@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
-public class GlobalExceptionHandler {
+public class RegisterExceptionHandler {
 
     /**
      * 处理 @Validated 校验失败

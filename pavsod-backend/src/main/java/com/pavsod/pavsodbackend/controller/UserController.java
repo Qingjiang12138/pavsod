@@ -1,16 +1,21 @@
 package com.pavsod.pavsodbackend.controller;
 
+import com.pavsod.pavsodbackend.dto.UserLoginDTO;
 import com.pavsod.pavsodbackend.dto.UserRegisterDTO;
 import com.pavsod.pavsodbackend.entity.User;
+import com.pavsod.pavsodbackend.pojo.LoginInfo;
 import com.pavsod.pavsodbackend.service.UserService;
+import com.pavsod.pavsodbackend.utils.JWTUtil;
 import common.Result;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -29,6 +34,18 @@ public class UserController {
         userService.userRegister(dto);
         return Result.success();
     }
+
+    @PostMapping("/login")
+    public Result login(@RequestBody @Validated UserLoginDTO dto){
+        log.info("登录：{}", dto);
+        LoginInfo info = userService.userLogin(dto);
+
+        if(info != null)
+            return Result.success(info);
+        else
+            return Result.error("用户名或密码错误");
+    }
+    
 
 
     //以下是学习时候的代码

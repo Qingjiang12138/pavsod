@@ -35,7 +35,7 @@ public class Result implements Serializable {
 
     public static Result success(){
         Result r = new Result();
-        r.setData(200);
+        r.setCode(200);
         r.setMsg("操作成功");
         return r;
     }
