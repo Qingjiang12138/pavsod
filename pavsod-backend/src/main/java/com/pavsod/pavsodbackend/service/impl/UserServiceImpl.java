@@ -46,7 +46,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         //判断是否存在这个员工，如果存在，组装登录成功的信息
         if(user != null){
-            String token = JWTUtil.getToken(dto);
+            String token = JWTUtil.getToken(user.getId());
 
             return new LoginInfo(user.getId(), user.getUsername(),
                     user.getPhone(), user.getAvatar(), token);

@@ -45,7 +45,13 @@ public class UserController {
         else
             return Result.error("用户名或密码错误");
     }
-    
+
+    @PostMapping("/check")
+    public Result check(){
+        log.info("check运行成功");
+        return Result.success();
+    }
+
 
 
     //以下是学习时候的代码
