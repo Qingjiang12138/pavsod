@@ -16,7 +16,7 @@ public class Task {
     private String video_type;
     private Integer target_fps;
     private Integer process_count;
-    private Short task_status;
+    private Integer task_status;
     private Date start_time;
     private Date end_time;
     private String error_msg;

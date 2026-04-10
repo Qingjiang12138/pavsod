@@ -31,12 +31,12 @@ public class UploadController {
         log.info("upload接收参数：{},{},{}",userId, frame, file);
 
         try {
-            uploadService.upload(userId, frame, file, video_type, duration);
+            String video_url = uploadService.upload(userId, frame, file, video_type, duration);
+            return Result.success(video_url);
         }
         catch (Exception e){
             return  Result.error();
         }
-
-        return Result.success();
+        
     }
 }

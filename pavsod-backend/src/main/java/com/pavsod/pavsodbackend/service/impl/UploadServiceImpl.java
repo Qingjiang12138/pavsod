@@ -1,6 +1,7 @@
 package com.pavsod.pavsodbackend.service.impl;
 
 import com.pavsod.pavsodbackend.entity.Original_video;
+import com.pavsod.pavsodbackend.entity.Task;
 import com.pavsod.pavsodbackend.mapper.UploadMapper;
 import com.pavsod.pavsodbackend.service.UploadService;
 import com.pavsod.pavsodbackend.utils.AliyunOSSOperator;
@@ -33,9 +34,8 @@ public class UploadServiceImpl implements UploadService {
     @Override
     public String upload(Long userId, Integer frame, MultipartFile file, String video_type, Integer duration) throws Exception {
 
+        //向original_video表插入一条数据
         String fileName = UUID.randomUUID() + file.getOriginalFilename();
-        System.out.println("原始文件名称：" + file.getOriginalFilename());
-        System.out.println("UUID之后文件名称：" + fileName);
 
         String video_url = aliyunOSSOperator.upload(file.getInputStream(), fileName);
         log.info("视频url：" + video_url);
@@ -55,6 +55,21 @@ public class UploadServiceImpl implements UploadService {
         originalVideo.setVideo_cover(video_cover);
         originalVideo.setUpload_time(java.time.LocalDateTime.now());
         uploadMapper.insert(originalVideo);
+        log.info("插入一条original_video数据");
+
+        //向task表插入一条数据
+        Long originalVideoId = uploadMapper.selectOriginalVideoIdByName(fileName);
+        System.out.println(originalVideoId);
+        Task task = new Task();
+
+        task.setUser_id(userId);
+        task.setOriginal_video_id(originalVideoId);
+        task.setVideo_type(video_type);
+        task.setTarget_fps(frame);
+        task.setProcess_count(1);
+        task.setTask_status(0);
+        uploadMapper.insertTask(task);
+        log.info("插入一条task数据");
 
         return video_url;
     }
