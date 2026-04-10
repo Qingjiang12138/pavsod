@@ -1,9 +1,12 @@
 package com.pavsod.pavsodbackend.entity;
 
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -13,8 +16,10 @@ public class Original_video {
     private String video_name;
     private String video_type;
     private Integer duration;
-    private Long video_size;
+    private String video_size;
     private String video_url;
     private String video_cover;
-    private Date upload_time;
+
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime upload_time;
 }

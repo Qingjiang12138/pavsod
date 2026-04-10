@@ -5,22 +5,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7ec015f0-b5bf-4471-a8e1-fcc5570c15d0" name="更改" comment="注册接口修正">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/TokenCheckAspect/TokenCheckAspect.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/aop/OperationLogAspect.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/filter/TokenFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/controller/UploadController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/mapper/UploadMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/service/UploadService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/service/impl/UploadServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/utils/AliyunOSSOperator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/upload.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/PavsodBackendApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/PavsodBackendApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/exception/LoginExceptionHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/utils/JWTUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/utils/JWTUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/PavsodBackendApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/PavsodBackendApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/controller/UserController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/exception/LoginExceptionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/exception/LoginExceptionHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/service/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/service/impl/UserServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/utils/JWTUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/utils/JWTUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/common/Result.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/common/Result.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/entity/Original_video.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/entity/Original_video.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/filter/TokenFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/filter/TokenFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/TokenCheckAspect/TokenCheckAspect.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/controller/UserController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/dto/UserLoginDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/entity/Original_video.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/entity/Original_video.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/entity/Task.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/entity/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/exception/RegisterExceptionHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/filter/TokenFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/mapper/UserMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/service/UserService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/service/impl/UserServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/utils/JWTUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/pavsod-backend-0.0.1-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/pavsod-backend-0.0.1-SNAPSHOT.jar.original" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.pavsod.pavsodbackend.PavsodBackendApplicationTests.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/surefire-reports/com.pavsod.pavsodbackend.PavsodBackendApplicationTests.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/pavsod/pavsodbackend/PavsodBackendApplicationTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../接口文档.md" beforeDir="false" afterPath="$PROJECT_DIR$/../接口文档.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,9 +49,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="package-info" />
+        <option value="HTML File" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -72,6 +92,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
     "JUnit.PavsodBackendApplicationTests.contextService.executor": "Run",
     "JUnit.PavsodBackendApplicationTests.testSelect.executor": "Run",
     "Maven.pavsod-backend [clean].executor": "Run",
@@ -82,10 +103,24 @@
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.PavsodBackendApplication.executor": "Run",
     "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true"
+    "kotlin-language-version-configured": "true",
+    "应用程序.Demo.executor": "Run"
   }
 }]]></component>
   <component name="RunManager" selected="Spring Boot.PavsodBackendApplication">
+    <configuration name="Demo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.pavsod.pavsodbackend.Demo" />
+      <module name="pavsod-backend" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.pavsod.pavsodbackend.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="PavsodBackendApplicationTests.contextService" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="pavsod-backend" />
       <extension name="coverage">
@@ -135,6 +170,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.PavsodBackendApplication" />
+        <item itemvalue="应用程序.Demo" />
         <item itemvalue="JUnit.PavsodBackendApplicationTests.contextService" />
         <item itemvalue="JUnit.PavsodBackendApplicationTests.testSelect" />
       </list>
