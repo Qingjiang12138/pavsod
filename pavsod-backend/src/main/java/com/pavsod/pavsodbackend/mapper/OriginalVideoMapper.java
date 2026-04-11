@@ -8,6 +8,5 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface OriginalVideoMapper extends BaseMapper<Original_video> {
 
-    @Select("select * from original_video where video_id = #{originalVideoId}")
     Original_video selectVideoById(Long originalVideoId);
 }

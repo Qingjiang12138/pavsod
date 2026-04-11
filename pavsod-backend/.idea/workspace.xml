@@ -4,17 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7ec015f0-b5bf-4471-a8e1-fcc5570c15d0" name="更改" comment="获取主页数据接口">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/controller/RecordController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/dto/GetRecordDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/mapper/RecordMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/pojo/RecordInfo.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/service/RecordService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/service/impl/RecordServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/RecordMapper.xml" afterDir="false" />
+    <list default="true" id="7ec015f0-b5bf-4471-a8e1-fcc5570c15d0" name="更改" comment="分页获取检测记录数据接口">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/OriginalVideoMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/UploadMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/UserMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/pavsod/pavsodbackend/PavsodBackendApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/pavsod/pavsodbackend/PavsodBackendApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/mapper/OriginalVideoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/mapper/OriginalVideoMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/mapper/UploadMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/mapper/UploadMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/mapper/UserMapper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,25 +66,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "JUnit.PavsodBackendApplicationTests.contextService.executor": "Run",
-    "JUnit.PavsodBackendApplicationTests.testFind.executor": "Run",
-    "JUnit.PavsodBackendApplicationTests.testSelect.executor": "Run",
-    "Maven.pavsod-backend [clean].executor": "Run",
-    "Maven.pavsod-backend [install].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.PavsodBackendApplication.executor": "Run",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "应用程序.Demo.executor": "Run"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;JUnit.PavsodBackendApplicationTests.contextService.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PavsodBackendApplicationTests.testFind.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PavsodBackendApplicationTests.testSelect.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.pavsod-backend [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.pavsod-backend [install].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.PavsodBackendApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;应用程序.Demo.executor&quot;: &quot;Run&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Spring Boot.PavsodBackendApplication">
     <configuration name="Demo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.pavsod.pavsodbackend.Demo" />
@@ -205,25 +202,25 @@
       <option name="project" value="LOCAL" />
       <updated>1775910078023</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="分页获取检测记录数据接口">
+      <option name="closed" value="true" />
+      <created>1775928678526</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1775928678526</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="backend study" />
     <MESSAGE value="注册接口修正" />
     <MESSAGE value="获取主页数据接口" />
-    <option name="LAST_COMMIT_MESSAGE" value="获取主页数据接口" />
+    <MESSAGE value="分页获取检测记录数据接口" />
+    <option name="LAST_COMMIT_MESSAGE" value="分页获取检测记录数据接口" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/service/impl/UserServiceImpl.java</url>
-          <line>109</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="SpringBootApplicationConfigurationType">
         <watch expression="user.created_at" />

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pavsod.pavsodbackend.mapper.UserMapper">
+
+    <!-- 根据手机号和密码查询用户 -->
+    <select id="selectByPhoneAndPassword" resultType="com.pavsod.pavsodbackend.entity.User">
+        SELECT id, username, phone, avatar
+        FROM user
+        WHERE phone = #{phone}
+        AND password = #{password}
+    </select>
+
+    <!-- 统计用户当月检测数量（本月1号至今） -->
+    <select id="countCurrentMonthDetectionCount" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM task
+        WHERE user_id = #{userId}
+        AND create_at >= DATE_FORMAT(CURDATE(), '%Y-%m-01')
+    </select>
+
+    <!-- 统计用户累计检测视频的总时长（秒） -->
+    <select id="sumTotalDetectionDuration" resultType="java.lang.Integer">
+        SELECT SUM(ov.duration)
+        FROM task t
+        INNER JOIN original_video ov ON t.original_video_id = ov.video_id
+        WHERE t.user_id = #{userId}
+    </select>
+
+    <!-- 根据ID查询用户详细信息 -->
+    <select id="selectByUserId" resultType="com.pavsod.pavsodbackend.entity.User">
+        SELECT id, username, password, avatar, email, phone,
+        detection_count, total_processed_videos, total_2d_videos,
+        total_3d_videos, current_storage, max_storage, created_at
+        FROM user
+        WHERE id = #{userId}
+    </select>
+
+    <!-- 查询过去7天每天的检测数量 -->
+    <select id="selectLast7DaysTaskCount" resultType="java.util.HashMap">
+        SELECT DATE(create_at) as date, COUNT(*) as count
+        FROM task
+        WHERE user_id = #{userId}
+        AND create_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+        GROUP BY DATE(create_at)
+        ORDER BY DATE(create_at)
+    </select>
+
+    <!-- 查询最近5条检测记录 -->
+    <select id="select5LastRecords" resultType="com.pavsod.pavsodbackend.entity.Task">
+        SELECT *
+        FROM task
+        WHERE user_id = #{userId}
+        ORDER BY create_at DESC, task_id DESC
+        LIMIT 5
+    </select>
+
+</mapper>

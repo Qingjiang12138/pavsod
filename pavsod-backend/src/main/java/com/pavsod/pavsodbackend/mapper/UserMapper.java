@@ -15,37 +15,20 @@ import java.util.Map;
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
 
-    @Select("select id, username, phone, avatar from user where phone = #{phone} and password = #{password}")
     User selectByPhoneAndPassword(UserLoginDTO dto);
 
-    @Select("SELECT COUNT(*) FROM task " +
-            "WHERE user_id = #{userId} " +
-            "AND create_at >= DATE_FORMAT(CURDATE(), '%Y-%m-01')")
     Integer countCurrentMonthDetectionCount(@Param("userId") Long userId);
 
-
-    @Select("SELECT SUM(ov.duration) FROM task t " +
-            "INNER JOIN original_video ov ON t.original_video_id = ov.video_id " +
-            "WHERE t.user_id = #{userId}")
     Integer sumTotalDetectionDuration(@Param("userId") Long userId);
 
-    @Select("SELECT id, username, password, avatar, email, phone, " +
-            "detection_count, total_processed_videos, total_2d_videos, " +
-            "total_3d_videos, current_storage, max_storage, created_at " +
-            "FROM user WHERE id = #{userId}")
     User selectByUserId(Long id);
 
-    @Select("SELECT DATE(create_at) as date, COUNT(*) as count " +
-            "FROM task " +
-            "WHERE user_id = #{userId} " +
-            "AND create_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) " +
-            "GROUP BY DATE(create_at) " +
-            "ORDER BY DATE(create_at)")
+    /*
+        这里IDEA可能会有误报，忽略即可
+        IDE 插件误将统计查询的 List<Map<String,Object>>（每行数据一个 Map）当成了对象映射的 Map<Key, Entity>（需要 @MapKey 指定主键作为 Key），
+        因为两者都包含 Map 关键字，插件静态分析无法区分泛型参数的具体结构，机械地触发"返回 Map 必须加注解"的规则。
+     */
     List<Map<String, Object>> selectLast7DaysTaskCount(@Param("userId") Long userId);
 
-    @Select("SELECT * FROM task " +
-            "WHERE user_id = #{userId} " +
-            "ORDER BY create_at DESC, task_id DESC " +
-            "LIMIT 5")
     List<Task> select5LastRecords(@Param("userId") Long userId);
 }
