@@ -61,4 +61,46 @@
         where id = #{userId}
     </select>
 
+    <update id="changeUserData">
+        UPDATE user
+        <set>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="detection_count != null">
+                detection_count = #{detection_count},
+            </if>
+            <if test="total_processed_videos != null">
+                total_processed_videos = #{total_processed_videos},
+            </if>
+            <if test="total_2d_videos != null">
+                total_2d_videos = #{total_2d_videos},
+            </if>
+            <if test="total_3d_videos != null">
+                total_3d_videos = #{total_3d_videos},
+            </if>
+            <if test="current_storage != null">
+                current_storage = #{current_storage},
+            </if>
+            <if test="max_storage != null">
+                max_storage = #{max_storage},
+            </if>
+            <if test="created_at != null">
+                created_at = #{created_at},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
 </mapper>

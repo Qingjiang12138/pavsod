@@ -126,6 +126,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return user;
     }
 
+    @Override
+    public void changeUserData(User user) {
+        if(user.getPassword() != null){
+            //保存加密密码
+            String encryptedPassword = MD5Util.encrypt(user.getPassword());
+            user.setPassword(encryptedPassword);
+        }
+
+        userMapper.changeUserData(user);
+    }
+
     /**
      * 获取用户当月的累计检测数量（本月1号至今）
      */

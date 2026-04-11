@@ -69,6 +69,16 @@ public class UserController {
 
     }
 
+    @PostMapping("/user/change")
+    public Result changeUserData(@RequestBody User user){
+        try{
+            log.info("接收到用户{}的修改信息请求", user.getId());
+            userService.changeUserData(user);
+            return Result.success();
+        } catch (Exception e) {
+            return Result.error();
+        }
+    }
 
 
     //以下是学习时候的代码

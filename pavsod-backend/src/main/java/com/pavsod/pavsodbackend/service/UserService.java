@@ -19,4 +19,6 @@ public interface UserService extends IService<User> {
     Map<String, Object> getHomeData(Long userId);
 
     User getUserData(Long userId);
+
+    void changeUserData(User user);
 }

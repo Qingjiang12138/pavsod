@@ -31,4 +31,6 @@ public interface UserMapper extends BaseMapper<User> {
     List<Map<String, Object>> selectLast7DaysTaskCount(@Param("userId") Long userId);
 
     List<Task> select5LastRecords(@Param("userId") Long userId);
+
+    void changeUserData(User user);
 }
