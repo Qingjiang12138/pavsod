@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pavsod.pavsodbackend.mapper.UploadMapper">
+    <select id="selectOriginalVideoIdByName" resultType="Long">
+        select video_id
+        from original_video
+        <where>
+            video_name = #{fileName}
+        </where>
+    </select>
+
+    <insert id="insertTask" useGeneratedKeys="true" keyProperty="task_id">
+        INSERT INTO task(
+        user_id,
+        original_video_id,
+        video_type,
+        target_fps,
+        process_count,
+        task_status,
+        create_at
+        ) VALUES (
+        #{user_id},
+        #{original_video_id},
+        #{video_type},
+        #{target_fps},
+        #{process_count},
+        #{task_status},
+        #{create_at}
+        )
+    </insert>
+</mapper>

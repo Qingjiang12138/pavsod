@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration;
 import com.github.pagehelper.autoconfigure.PageHelperProperties;
+import com.pavsod.pavsodbackend.dto.DeleteRecordDTO;
 import com.pavsod.pavsodbackend.dto.GetRecordDTO;
 import com.pavsod.pavsodbackend.entity.Task;
 import com.pavsod.pavsodbackend.mapper.RecordMapper;
@@ -48,5 +49,17 @@ public class RecordServiceImpl implements RecordService {
         }
 
         return recordInfos;
+    }
+
+    @Override
+    public void deleteRecord(DeleteRecordDTO dto) {
+        //删除original_video表的一条数据
+        recordMapper.deleteOriginalVideoById(dto.getVideo_id());
+
+        //删除salient_video表的一条数据
+        recordMapper.deleteSalientVideoByOriginalVideoId(dto.getVideo_id());
+
+        //删除task表的一条数据
+        recordMapper.deleteTaskByUserIdAndOriginalVideoId(dto.getUserId(), dto.getVideo_id());
     }
 }

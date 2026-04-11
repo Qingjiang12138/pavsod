@@ -19,4 +19,10 @@ public interface RecordMapper extends BaseMapper<Task> {
     String selectVideoUrlById(Long originalVideoId);
 
     String selectVideoCoverById(Long originalVideoId);
+
+    void deleteOriginalVideoById(Long videoId);
+
+    void deleteSalientVideoByOriginalVideoId(Long videoId);
+
+    void deleteTaskByUserIdAndOriginalVideoId(Long userId, Long videoId);
 }
