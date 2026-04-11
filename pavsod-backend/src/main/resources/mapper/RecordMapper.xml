@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pavsod.pavsodbackend.mapper.RecordMapper">
+    <select id="list" resultType="com.pavsod.pavsodbackend.entity.Task">
+        SELECT t.*
+        FROM task t
+        LEFT JOIN original_video ov ON t.original_video_id = ov.video_id
+        <where>
+            t.user_id = #{dto.userId}
+
+            <!-- 按视频名称模糊查询 -->
+            <if test="dto.find_name != null and dto.find_name != ''">
+                AND ov.video_name LIKE CONCAT('%', #{dto.find_name}, '%')
+            </if>
+
+            <!-- 按日期查询（精确匹配日期部分） -->
+            <if test="dto.find_date != null">
+                AND DATE(t.create_at) = #{dto.find_date}
+            </if>
+        </where>
+        ORDER BY t.create_at DESC
+    </select>
+
+    <select id="selectVideoNameById" resultType="string">
+        select video_name from original_video
+        <where>
+            video_id = #{originalVideoId}
+        </where>
+    </select>
+
+    <select id="selectVideoUrlById" resultType="string">
+        select video_url from original_video
+        <where>
+            video_id = #{originalVideoId}
+        </where>
+    </select>
+
+    <select id="selectVideoCoverById" resultType="string">
+        select video_cover from original_video
+        <where>
+            video_id = #{originalVideoId}
+        </where>
+    </select>
+</mapper>
