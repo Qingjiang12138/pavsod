@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7ec015f0-b5bf-4471-a8e1-fcc5570c15d0" name="更改" comment="分页获取检测记录数据接口">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/OriginalVideoMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/UploadMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/UserMapper.xml" afterDir="false" />
+    <list default="true" id="7ec015f0-b5bf-4471-a8e1-fcc5570c15d0" name="更改" comment="重构所有Mapper层与xml文件进行关联映射写SQL语句">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/mapper/OriginalVideoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/mapper/OriginalVideoMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/mapper/UploadMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/mapper/UploadMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/service/impl/UserServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,7 +205,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775928678526</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="重构所有Mapper层与xml文件进行关联映射写SQL语句">
+      <option name="closed" value="true" />
+      <created>1775930802788</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1775930802788</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -218,7 +221,8 @@
     <MESSAGE value="注册接口修正" />
     <MESSAGE value="获取主页数据接口" />
     <MESSAGE value="分页获取检测记录数据接口" />
-    <option name="LAST_COMMIT_MESSAGE" value="分页获取检测记录数据接口" />
+    <MESSAGE value="重构所有Mapper层与xml文件进行关联映射写SQL语句" />
+    <option name="LAST_COMMIT_MESSAGE" value="重构所有Mapper层与xml文件进行关联映射写SQL语句" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

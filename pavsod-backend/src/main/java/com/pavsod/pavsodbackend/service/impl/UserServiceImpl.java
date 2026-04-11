@@ -9,6 +9,7 @@ import com.pavsod.pavsodbackend.entity.User;
 import com.pavsod.pavsodbackend.mapper.OriginalVideoMapper;
 import com.pavsod.pavsodbackend.mapper.UserMapper;
 import com.pavsod.pavsodbackend.pojo.LoginInfo;
+import com.pavsod.pavsodbackend.pojo.RecordInfo;
 import com.pavsod.pavsodbackend.service.UserService;
 import com.pavsod.pavsodbackend.utils.JWTUtil;
 import com.pavsod.pavsodbackend.utils.MD5Util;
@@ -90,22 +91,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         int[] week_count = getLast7DaysTaskCount(userId);
 
         //获取最近五次检测记录
-        enum RecordKey{
-            video_id, video_cover, video_name, video_url, video_status
-        }
-        List<EnumMap<RecordKey, Object>> last_records = new ArrayList<>();
+        List<RecordInfo> last_records = new ArrayList<>();
 
         List<Task> tasks = userMapper.select5LastRecords(userId);
         for(Task task : tasks){
             Long originalVideoId = task.getOriginal_video_id();
             Original_video video = originalVideoMapper.selectVideoById(originalVideoId);
-            EnumMap<RecordKey, Object> record = new EnumMap<>(RecordKey.class);
+            RecordInfo record = new RecordInfo();
 
-            record.put(RecordKey.video_id, video.getVideo_id());
-            record.put(RecordKey.video_cover, video.getVideo_cover());
-            record.put(RecordKey.video_name, video.getVideo_name());
-            record.put(RecordKey.video_url, video.getVideo_url());
-            record.put(RecordKey.video_status, task.getTask_status());
+            record.setVideo_id(video.getVideo_id());
+            record.setVideo_cover(video.getVideo_cover());
+            record.setVideo_name(video.getVideo_name());
+            record.setVideo_url(video.getVideo_url());
+            record.setVideo_status(task.getTask_status());
+            record.setTask_create_at(task.getCreate_at());
 
             last_records.add(record);
         }
