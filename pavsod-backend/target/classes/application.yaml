@@ -1,3 +1,15 @@
+app:
+  name: "PAV-SOD全景级音视频显著性检测系统"
+  version: "1.0.0"
+  #阿里云存储配置
+  oss:
+    endpoint: "https://oss-cn-beijing.aliyuncs.com"
+    bucketName: "pavsod-oss"
+    region: "cn-beijing"
+  default:
+    photo_url: "https://pavsod-oss.oss-cn-beijing.aliyuncs.com/2042664572095430658.png"
+    jwt_secret: "liqingjiang"
+
 server:
   port: 2778
 

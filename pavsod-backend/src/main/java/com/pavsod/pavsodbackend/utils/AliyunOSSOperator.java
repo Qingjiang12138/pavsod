@@ -7,6 +7,7 @@ import com.aliyun.oss.common.auth.*;
 import com.aliyun.oss.common.comm.SignVersion;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.aliyun.oss.model.PutObjectResult;
+import com.pavsod.pavsodbackend.config.AppConfig;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
@@ -16,9 +17,9 @@ import java.io.InputStream;
 public class AliyunOSSOperator {
 
     // 修正：去掉endpoint中的空格
-    private String endpoint = "https://oss-cn-beijing.aliyuncs.com";
-    private String bucketName = "pavsod-oss";
-    private String region = "cn-beijing";
+    private String endpoint = AppConfig.OSS_ENDPOINT;
+    private String bucketName = AppConfig.OSS_BUCKET_NAME;
+    private String region = AppConfig.OSS_REGION;
 
     public String upload(InputStream inputStream, String objectName) throws Exception {
         EnvironmentVariableCredentialsProvider credentialsProvider =

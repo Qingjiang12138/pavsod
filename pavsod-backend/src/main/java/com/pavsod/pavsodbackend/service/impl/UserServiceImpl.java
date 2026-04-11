@@ -1,6 +1,7 @@
 package com.pavsod.pavsodbackend.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.pavsod.pavsodbackend.config.AppConfig;
 import com.pavsod.pavsodbackend.dto.UserLoginDTO;
 import com.pavsod.pavsodbackend.dto.UserRegisterDTO;
 import com.pavsod.pavsodbackend.entity.Original_video;
@@ -42,6 +43,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User user = new User();
         user.setUsername(dto.getUsername());
         user.setPhone(dto.getPhone());
+        user.setAvatar(AppConfig.DEFAULT_PHOTO_URL);
         user.setPassword(dto.getPassword());
         user.setDetection_count(0);
         user.setTotal_2d_videos(0);
