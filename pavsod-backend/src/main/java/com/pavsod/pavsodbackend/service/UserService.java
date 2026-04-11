@@ -7,6 +7,7 @@ import com.pavsod.pavsodbackend.entity.User;
 import com.pavsod.pavsodbackend.mapper.UserMapper;
 import com.pavsod.pavsodbackend.pojo.LoginInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -21,4 +22,6 @@ public interface UserService extends IService<User> {
     User getUserData(Long userId);
 
     void changeUserData(User user);
+
+    void changeUserPhoto(Long id, MultipartFile photo) throws Exception;
 }

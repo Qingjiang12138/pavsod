@@ -33,4 +33,6 @@ public interface UserMapper extends BaseMapper<User> {
     List<Task> select5LastRecords(@Param("userId") Long userId);
 
     void changeUserData(User user);
+
+    void changeUserPhotoById(Long id, String url);
 }

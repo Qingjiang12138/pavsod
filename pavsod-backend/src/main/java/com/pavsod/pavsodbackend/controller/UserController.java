@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -76,6 +77,17 @@ public class UserController {
             userService.changeUserData(user);
             return Result.success();
         } catch (Exception e) {
+            return Result.error();
+        }
+    }
+
+    @PostMapping("/user/change/photo")
+    public Result changeUserPhoto(@RequestParam("id") Long id, @RequestPart("photo") MultipartFile photo){
+        try {
+            userService.changeUserPhoto(id, photo);
+            return Result.success(200, "修改头像成功");
+        }
+        catch (Exception e){
             return Result.error();
         }
     }

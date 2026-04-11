@@ -11,6 +11,7 @@ import com.pavsod.pavsodbackend.mapper.UserMapper;
 import com.pavsod.pavsodbackend.pojo.LoginInfo;
 import com.pavsod.pavsodbackend.pojo.RecordInfo;
 import com.pavsod.pavsodbackend.service.UserService;
+import com.pavsod.pavsodbackend.utils.AliyunOSSOperator;
 import com.pavsod.pavsodbackend.utils.JWTUtil;
 import com.pavsod.pavsodbackend.utils.MD5Util;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -135,6 +138,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
 
         userMapper.changeUserData(user);
+    }
+
+    @Override
+    public void changeUserPhoto(Long id, MultipartFile photo) throws Exception {
+        AliyunOSSOperator aliyunOSSOperator = new AliyunOSSOperator();
+        String url = aliyunOSSOperator.upload(photo.getInputStream(), id.toString() + photo.getOriginalFilename().substring(photo.getOriginalFilename().lastIndexOf(".")));
+        userMapper.changeUserPhotoById(id, url);
     }
 
     /**

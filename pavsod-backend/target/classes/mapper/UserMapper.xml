@@ -103,4 +103,11 @@
         </set>
         WHERE id = #{id}
     </update>
+
+    <update id="changeUserPhotoById">
+        update user
+        set avatar = #{url}
+        where id = #{id}
+    </update>
+
 </mapper>
