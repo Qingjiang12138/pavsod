@@ -1,6 +1,12 @@
 # 基于音频信息的视觉显著物体检测设计与实现
+## 毕业设计：Qingjiang Li（Hefei University of Technology）
+前端：Vue
 
-毕业设计：Qingjiang Li
+后端：SpringBoot
+
+数据库：MySQL
+
+
 
 ## 前端运行：
 
