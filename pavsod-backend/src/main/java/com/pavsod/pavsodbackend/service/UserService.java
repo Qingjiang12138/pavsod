@@ -8,9 +8,13 @@ import com.pavsod.pavsodbackend.mapper.UserMapper;
 import com.pavsod.pavsodbackend.pojo.LoginInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Map;
+
 public interface UserService extends IService<User> {
 
     void userRegister(UserRegisterDTO dto);
 
     LoginInfo userLogin(UserLoginDTO dto);
+
+    Map<String, Object> getHomeData(Long userId);
 }

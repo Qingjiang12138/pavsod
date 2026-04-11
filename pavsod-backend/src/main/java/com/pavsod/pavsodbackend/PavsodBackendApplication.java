@@ -28,9 +28,4 @@ public class PavsodBackendApplication {
         return "hello world";
     }
 
-    @PostMapping
-    public String save(@RequestBody Map<String, String> map){
-        System.out.println(map.toString());
-        return "POST请求成功";
-    }
 }

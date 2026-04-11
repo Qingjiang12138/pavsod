@@ -16,7 +16,7 @@ public class Original_video {
     private String video_name;
     private String video_type;
     private Integer duration;
-    private String video_size;
+    private Long video_size;
     private String video_url;
     private String video_cover;
 

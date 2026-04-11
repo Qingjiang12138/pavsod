@@ -4,6 +4,7 @@ package com.pavsod.pavsodbackend.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -20,4 +21,5 @@ public class Task {
     private Date start_time;
     private Date end_time;
     private String error_msg;
+    private LocalDateTime create_at;
 }

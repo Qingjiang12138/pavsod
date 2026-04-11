@@ -17,7 +17,6 @@ import java.util.Map;
 
 @Slf4j
 @RestController
-@RequestMapping("/user")
 public class UserController {
 
     @Resource
@@ -29,13 +28,13 @@ public class UserController {
 //        return Result.success();
 //    }
 
-    @PostMapping("/register")
+    @PostMapping("/user/register")
     public Result register(@RequestBody @Validated UserRegisterDTO dto){
         userService.userRegister(dto);
         return Result.success();
     }
 
-    @PostMapping("/login")
+    @PostMapping("/user/login")
     public Result login(@RequestBody @Validated UserLoginDTO dto){
         log.info("登录：{}", dto);
         LoginInfo info = userService.userLogin(dto);
@@ -46,10 +45,16 @@ public class UserController {
             return Result.error("用户名或密码错误");
     }
 
-    @PostMapping("/check")
-    public Result check(){
-        log.info("check运行成功");
-        return Result.success();
+    @GetMapping("/home/data")
+    public Result getHomeData(@RequestBody Map<String, Object> map){
+        Long userId = (Long)map.get("userId");
+        Map<String, Object> data = userService.getHomeData(userId);
+
+
+        if (!data.isEmpty())
+            return Result.success(data);
+        else
+            return Result.error("用户不存在");
     }
 
 

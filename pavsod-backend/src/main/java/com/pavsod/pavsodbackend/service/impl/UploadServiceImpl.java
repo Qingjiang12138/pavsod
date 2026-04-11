@@ -50,7 +50,7 @@ public class UploadServiceImpl implements UploadService {
         originalVideo.setVideo_name(fileName);
         originalVideo.setVideo_type(video_type);
         originalVideo.setDuration(duration);
-        originalVideo.setVideo_size(formatSize(file.getSize()));
+        originalVideo.setVideo_size(file.getSize());
         originalVideo.setVideo_url(video_url);
         originalVideo.setVideo_cover(video_cover);
         originalVideo.setUpload_time(java.time.LocalDateTime.now());
@@ -68,25 +68,11 @@ public class UploadServiceImpl implements UploadService {
         task.setTarget_fps(frame);
         task.setProcess_count(1);
         task.setTask_status(0);
+        task.setCreate_at(java.time.LocalDateTime.now());
         uploadMapper.insertTask(task);
         log.info("插入一条task数据");
 
         return video_url;
-    }
-
-    /**
-     * 格式化文件大小（B/KB/MB/GB）
-     */
-    private String formatSize(long size) {
-        if (size < 1024) {
-            return size + " B";
-        } else if (size < 1024 * 1024) {
-            return String.format("%.2f KB", size / 1024.0);
-        } else if (size < 1024 * 1024 * 1024) {
-            return String.format("%.2f MB", size / (1024.0 * 1024));
-        } else {
-            return String.format("%.2f GB", size / (1024.0 * 1024 * 1024));
-        }
     }
 
     /**

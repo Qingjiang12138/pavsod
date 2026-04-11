@@ -5,15 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7ec015f0-b5bf-4471-a8e1-fcc5570c15d0" name="更改" comment="注册接口修正">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/mapper/OriginalVideoMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/controller/UploadController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/controller/UploadController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/PavsodBackendApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/PavsodBackendApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/entity/Original_video.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/entity/Original_video.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/entity/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/entity/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/filter/TokenFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/filter/TokenFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/mapper/UploadMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/mapper/UploadMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/service/impl/UploadServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/service/impl/UploadServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/PavsodBackendApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/PavsodBackendApplication.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/controller/UploadController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/controller/UploadController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/entity/Original_video.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/entity/Original_video.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/entity/Task.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/entity/Task.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/filter/TokenFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/filter/TokenFilter.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/mapper/UploadMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/mapper/UploadMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/mapper/UserMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/mapper/UserMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/service/UserService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/service/impl/UploadServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/service/impl/UploadServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/service/impl/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/pavsod/pavsodbackend/service/impl/UserServiceImpl.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +91,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.PavsodBackendApplication.executor": "Run",
+    "Spring Boot.PavsodBackendApplication.executor": "Debug",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "应用程序.Demo.executor": "Run"
@@ -180,5 +196,21 @@
     <MESSAGE value="backend study" />
     <MESSAGE value="注册接口修正" />
     <option name="LAST_COMMIT_MESSAGE" value="注册接口修正" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/pavsod/pavsodbackend/service/impl/UserServiceImpl.java</url>
+          <line>112</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="user.created_at" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>
