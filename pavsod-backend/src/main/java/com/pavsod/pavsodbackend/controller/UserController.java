@@ -57,6 +57,18 @@ public class UserController {
             return Result.error("用户不存在");
     }
 
+    @GetMapping("/user/data")
+    public Result getUserData(@RequestBody Map<String,Object> userId){
+        try {
+            User user = userService.getUserData((Long)userId.get("userId"));
+            return Result.success(user);
+        }
+        catch (Exception e){
+            return Result.error();
+        }
+
+    }
+
 
 
     //以下是学习时候的代码

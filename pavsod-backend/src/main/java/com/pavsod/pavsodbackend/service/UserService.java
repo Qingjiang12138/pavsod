@@ -17,4 +17,6 @@ public interface UserService extends IService<User> {
     LoginInfo userLogin(UserLoginDTO dto);
 
     Map<String, Object> getHomeData(Long userId);
+
+    User getUserData(Long userId);
 }

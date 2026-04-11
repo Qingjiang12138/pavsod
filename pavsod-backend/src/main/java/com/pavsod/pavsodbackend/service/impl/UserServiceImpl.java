@@ -120,6 +120,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return data;
     }
 
+    @Override
+    public User getUserData(Long userId) {
+        User user = userMapper.selectByUserId(userId);
+        return user;
+    }
+
     /**
      * 获取用户当月的累计检测数量（本月1号至今）
      */

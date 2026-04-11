@@ -55,5 +55,10 @@
         ORDER BY create_at DESC, task_id DESC
         LIMIT 5
     </select>
+    <select id="getUserById" resultType="com.pavsod.pavsodbackend.entity.User">
+        select *
+        from user
+        where id = #{userId}
+    </select>
 
 </mapper>
