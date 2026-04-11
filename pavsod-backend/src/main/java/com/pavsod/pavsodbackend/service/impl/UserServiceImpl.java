@@ -101,7 +101,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
             record.setVideo_id(video.getVideo_id());
             record.setVideo_cover(video.getVideo_cover());
-            record.setVideo_name(video.getVideo_name());
+            record.setVideo_name(video.getVideo_name().substring(36));
             record.setVideo_url(video.getVideo_url());
             record.setVideo_status(task.getTask_status());
             record.setTask_create_at(task.getCreate_at());

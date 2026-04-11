@@ -25,7 +25,7 @@ public class RecordController {
     RecordService recordService;
 
     @PostMapping("/data")
-    public Result GetRecordData(@RequestBody @Validated GetRecordDTO dto){
+    public Result getRecordData(@RequestBody @Validated GetRecordDTO dto){
         try {
             log.info("接收到用户{}的分页记录查询请求", dto.getUserId());
             List<RecordInfo> record_list = recordService.getRecordPage(dto);
