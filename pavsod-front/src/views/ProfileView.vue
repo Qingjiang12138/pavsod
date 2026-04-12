@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useAuth } from '@/stores/auth'
 import UserProfileCard from '@/components/profile/UserProfileCard.vue'
 import UserStats from '@/components/profile/UserStats.vue'
 import SecuritySettings from '@/components/profile/SecuritySettings.vue'
 import SupportLinks from '@/components/profile/SupportLinks.vue'
+
+const { logout } = useAuth()
 
 // 模拟用户数据
 const userData = ref({
@@ -83,8 +86,7 @@ const handleAbout = () => {
 }
 
 const handleLogout = () => {
-  console.log('退出登录')
-  // TODO: 调用登出接口，跳转登录页
+  logout()
 }
 </script>
 

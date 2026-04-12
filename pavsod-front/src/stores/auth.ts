@@ -1,70 +1,62 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-
-// 预设用户数据（前端模拟）
-const MOCK_USER = {
-  phone: '18340237677',
-  password: '123456',
-  username: '张三',
-  avatar: ''
-}
+import * as authApi from '@/api/auth'
 
 const STORAGE_KEY = 'pavsod_auth'
+const TOKEN_KEY = 'pavsod_token'
 
 // 创建响应式状态
 const isAuthenticated = ref(false)
 const user = ref<{
+  userId: string
   phone: string
   username: string
   avatar: string
 } | null>(null)
+const token = ref<string>('')
 
 // 初始化时检查 localStorage
 const initAuth = () => {
   const stored = localStorage.getItem(STORAGE_KEY)
-  if (stored) {
+  const storedToken = localStorage.getItem(TOKEN_KEY)
+  if (stored && storedToken) {
     try {
       const data = JSON.parse(stored)
       isAuthenticated.value = true
       user.value = data
+      token.value = storedToken
     } catch {
       localStorage.removeItem(STORAGE_KEY)
+      localStorage.removeItem(TOKEN_KEY)
     }
   }
+}
+
+// 设置登录状态
+const setAuth = (data: authApi.LoginResult | authApi.RegisterResult) => {
+  isAuthenticated.value = true
+  user.value = {
+    userId: data.userId,
+    phone: data.phone,
+    username: data.username,
+    avatar: data.avatar
+  }
+  token.value = data.token
+  // 保存到 localStorage
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(user.value))
+  localStorage.setItem(TOKEN_KEY, data.token)
 }
 
 // 登录
-const login = (phone: string, password: string): boolean => {
-  // 验证预设用户
-  if (phone === MOCK_USER.phone && password === MOCK_USER.password) {
-    isAuthenticated.value = true
-    user.value = {
-      phone: MOCK_USER.phone,
-      username: MOCK_USER.username,
-      avatar: MOCK_USER.avatar
-    }
-    // 保存到 localStorage
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(user.value))
-    return true
-  }
-  return false
+const login = async (phone: string, password: string): Promise<void> => {
+  const result = await authApi.login({ phone, password })
+  setAuth(result)
 }
 
-// 注册（前端模拟，实际只是添加到本地存储）
-const register = (username: string, phone: string, password: string): boolean => {
-  // 检查手机号是否已被使用（预设用户）
-  if (phone === MOCK_USER.phone) {
-    return false
-  }
-  // 模拟注册成功，直接登录
-  isAuthenticated.value = true
-  user.value = {
-    phone,
-    username,
-    avatar: ''
-  }
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(user.value))
-  return true
+// 注册
+const register = async (username: string, phone: string, password: string): Promise<void> => {
+  const result = await authApi.register({ username, phone, password })
+  setAuth(result)
 }
 
 // 登出
@@ -81,19 +73,14 @@ export const useAuth = () => {
   return {
     isAuthenticated: computed(() => isAuthenticated.value),
     user: computed(() => user.value),
-    login: (phone: string, password: string) => {
-      const success = login(phone, password)
-      if (success) {
-        router.push('/')
-      }
-      return success
+    token: computed(() => token.value),
+    login: async (phone: string, password: string): Promise<void> => {
+      await login(phone, password)
+      router.push('/')
     },
-    register: (username: string, phone: string, password: string) => {
-      const success = register(username, phone, password)
-      if (success) {
-        router.push('/')
-      }
-      return success
+    register: async (username: string, phone: string, password: string): Promise<void> => {
+      await authApi.register({ username, phone, password })
+      router.push('/login')
     },
     logout: () => {
       logout()
@@ -106,4 +93,4 @@ export const useAuth = () => {
 initAuth()
 
 // 导出给路由守卫使用
-export { isAuthenticated, user, login, logout }
+export { isAuthenticated, user, token, login, logout }

@@ -42,14 +42,13 @@ const handleRegister = async () => {
 
   isLoading.value = true
 
-  // 模拟注册请求
-  setTimeout(() => {
-    const success = register(username.value, phone.value, password.value)
-    if (!success) {
-      errorMsg.value = '该手机号已被注册'
-    }
+  try {
+    await register(username.value, phone.value, password.value)
+    // 注册成功会自动跳转首页（在useAuth中处理）
+  } catch (error: any) {
+    errorMsg.value = error.message || '注册失败，请稍后重试'
     isLoading.value = false
-  }, 500)
+  }
 }
 
 const goToLogin = () => {

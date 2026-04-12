@@ -25,14 +25,13 @@ const handleLogin = async () => {
 
   isLoading.value = true
 
-  // 模拟登录请求
-  setTimeout(() => {
-    const success = login(phone.value, password.value)
-    if (!success) {
-      errorMsg.value = '手机号或密码错误'
-    }
+  try {
+    await login(phone.value, password.value)
+    // 登录成功会自动跳转首页（在useAuth中处理）
+  } catch (error: any) {
+    errorMsg.value = error.message || '手机号或密码错误'
     isLoading.value = false
-  }, 500)
+  }
 }
 
 const goToRegister = () => {
