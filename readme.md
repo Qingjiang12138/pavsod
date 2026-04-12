@@ -29,6 +29,8 @@ npm run build
 ```
 
 
+## 启动Redis
+  在本地启动Redis，记录Redis端口
 
 ## Flask框架运行CAV-Net
 
