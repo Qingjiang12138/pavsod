@@ -22,7 +22,7 @@
     </update>
     <update id="userStorageAdd">
         UPDATE user
-        SET current_storage = current_storage + #{addSize}
+        SET current_storage = current_storage + #{videoSize}
         WHERE id = #{userId}
     </update>
 

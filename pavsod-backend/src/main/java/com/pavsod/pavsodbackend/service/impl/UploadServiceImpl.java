@@ -1,5 +1,7 @@
 package com.pavsod.pavsodbackend.service.impl;
 
+import com.pavsod.pavsodbackend.config.AppConfig;
+import com.pavsod.pavsodbackend.config.RestTemplateConfig;
 import com.pavsod.pavsodbackend.entity.Original_video;
 import com.pavsod.pavsodbackend.entity.Task;
 import com.pavsod.pavsodbackend.entity.User;
@@ -9,7 +11,12 @@ import com.pavsod.pavsodbackend.service.UploadService;
 import com.pavsod.pavsodbackend.utils.AliyunOSSOperator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import org.bytedeco.javacv.FFmpegFrameGrabber;
@@ -22,11 +29,16 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Slf4j
 @Service
 public class UploadServiceImpl implements UploadService {
+    @Autowired
+    private RestTemplate restTemplate;
+
     @Autowired
     private AliyunOSSOperator aliyunOSSOperator;
 
@@ -97,6 +109,9 @@ public class UploadServiceImpl implements UploadService {
         task.setCreate_at(java.time.LocalDateTime.now());
         uploadMapper.insertTask(task);
         log.info("插入一条task数据");
+
+        //通知flask端开始处理
+        notifyFlaskProcess(video_url, frame);
 
         return video_url;
     }
@@ -173,5 +188,42 @@ public class UploadServiceImpl implements UploadService {
         if (bytes < 1024 * 1024) return String.format("%.2fKB", bytes / 1024.0);
         if (bytes < 1024 * 1024 * 1024) return String.format("%.2fMB", bytes / (1024.0 * 1024));
         return String.format("%.2fGB", bytes / (1024.0 * 1024 * 1024));
+    }
+
+    /**
+     * 通知Flask后端开始视频处理
+     */
+    private void notifyFlaskProcess(String videoUrl, Integer fps) {
+        try {
+            // 构建请求URL
+            String url = String.format("http://%s:%d/task", AppConfig.FLASK_HOST, AppConfig.FLASK_PORT);
+
+            // 构建请求体
+            Map<String, Object> requestBody = new HashMap<>();
+            requestBody.put("url", videoUrl);
+            requestBody.put("fps", fps);
+
+            // 设置请求头
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            // 构建请求实体
+            HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, headers);
+
+            // 发送POST请求
+            ResponseEntity<Map> response = restTemplate.postForEntity(url, request, Map.class);
+
+            // 处理响应
+            if (response.getStatusCode().is2xxSuccessful()) {
+                Map body = response.getBody();
+                log.info("Flask响应: {}", body);
+            } else {
+                log.error("通知Flask失败，状态码: {}", response.getStatusCode());
+            }
+
+        } catch (Exception e) {
+            // 通知失败不影响主流程，只记录日志
+            log.error("通知Flask处理失败: {}", e.getMessage());
+        }
     }
 }

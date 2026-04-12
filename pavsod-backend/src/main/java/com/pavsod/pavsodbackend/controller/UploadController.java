@@ -35,6 +35,7 @@ public class UploadController {
             return Result.success(video_url);
         }
         catch (Exception e){
+            System.out.println(e.getMessage());
             return  Result.error();
         }
         

@@ -12,6 +12,8 @@ public class AppConfig {
     public static String OSS_REGION;
     public static String DEFAULT_PHOTO_URL;
     public static String DEFAULT_JWT_SECRET;
+    public static String FLASK_HOST;
+    public static Integer FLASK_PORT;
 
     @Value("${app.name}")
     private void setAppName(String name){
@@ -46,5 +48,15 @@ public class AppConfig {
     @Value("${app.default.jwt_secret}")
     private void setDefaultJwtSecret(String defaultJwtSecret){
         DEFAULT_JWT_SECRET = defaultJwtSecret;
+    }
+
+    @Value("${app.flask.host}")
+    private void setFlaskHost(String flaskHost){
+        FLASK_HOST = flaskHost;
+    }
+
+    @Value("${app.flask.port}")
+    private void setFlaskPort(Integer flaskPort){
+        FLASK_PORT = flaskPort;
     }
 }

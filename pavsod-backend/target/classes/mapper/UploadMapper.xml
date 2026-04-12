@@ -4,12 +4,39 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.pavsod.pavsodbackend.mapper.UploadMapper">
+
+    <update id="user2dDetectCountAdd">
+        UPDATE user
+        SET detection_count = detection_count + 1,
+        total_processed_videos = total_processed_videos + 1,
+        total_2d_videos = total_2d_videos + 1
+        WHERE id = #{userId}
+    </update>
+
+    <update id="user3dDetectCountAdd">
+        UPDATE user
+        SET detection_count = detection_count + 1,
+        total_processed_videos = total_processed_videos + 1,
+        total_3d_videos = total_3d_videos + 1
+        WHERE id = #{userId}
+    </update>
+    <update id="userStorageAdd">
+        UPDATE user
+        SET current_storage = current_storage + #{videoSize}
+        WHERE id = #{userId}
+    </update>
+
     <select id="selectOriginalVideoIdByName" resultType="Long">
         select video_id
         from original_video
         <where>
             video_name = #{fileName}
         </where>
+    </select>
+    <select id="selectUserById" resultType="com.pavsod.pavsodbackend.entity.User">
+        select *
+        from user
+        where id = #{userId}
     </select>
 
     <insert id="insertTask" useGeneratedKeys="true" keyProperty="task_id">
