@@ -1,5 +1,5 @@
 from flask import Flask, request
-import glogal_options as opts
+import global_options as opts
 import pymysql
 import os
 import cv2

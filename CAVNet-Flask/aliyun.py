@@ -1,5 +1,5 @@
 import alibabacloud_oss_v2 as oss
-import glogal_options as opts
+import global_options as opts
 import uuid
 
 def aliyunOssUpload(file, originalFileName):
