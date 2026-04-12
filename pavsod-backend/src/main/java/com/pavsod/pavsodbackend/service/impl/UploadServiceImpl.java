@@ -2,6 +2,8 @@ package com.pavsod.pavsodbackend.service.impl;
 
 import com.pavsod.pavsodbackend.entity.Original_video;
 import com.pavsod.pavsodbackend.entity.Task;
+import com.pavsod.pavsodbackend.entity.User;
+import com.pavsod.pavsodbackend.exception.BusinessException;
 import com.pavsod.pavsodbackend.mapper.UploadMapper;
 import com.pavsod.pavsodbackend.service.UploadService;
 import com.pavsod.pavsodbackend.utils.AliyunOSSOperator;
@@ -33,6 +35,11 @@ public class UploadServiceImpl implements UploadService {
 
     @Override
     public String upload(Long userId, Integer frame, MultipartFile file, String video_type, Integer duration) throws Exception {
+        //用户表对应视频类型检测数量加一
+        if(video_type.contains("2"))
+            uploadMapper.user2dDetectCountAdd(userId);
+        if(video_type.contains("3"))
+            uploadMapper.user3dDetectCountAdd(userId);
 
         //向original_video表插入一条数据
         String fileName = UUID.randomUUID() + file.getOriginalFilename();
@@ -56,6 +63,25 @@ public class UploadServiceImpl implements UploadService {
         originalVideo.setUpload_time(java.time.LocalDateTime.now());
         uploadMapper.insert(originalVideo);
         log.info("插入一条original_video数据");
+
+
+        // 在更新前检查是否超限
+        User user = uploadMapper.selectUserById(userId);
+        long maxStorage = user.getMax_storage();      // 最大空间
+        long currentStorage = user.getCurrent_storage(); // 已用空间
+        long newSize = file.getSize();
+
+        if (currentStorage + newSize > maxStorage) {
+            long remain = maxStorage - currentStorage;
+            throw new BusinessException(
+                    String.format("存储空间不足，需要%s，剩余%s",
+                            formatSize(newSize), formatSize(remain))
+            );
+        }
+        //user表储存空间增加
+        long videoSize = file.getSize();
+        uploadMapper.userStorageAdd(userId, videoSize);
+        log.info("用户{}存储空间增加{}字节", userId, videoSize);
 
         //向task表插入一条数据
         Long originalVideoId = uploadMapper.selectOriginalVideoIdByName(fileName);
@@ -139,5 +165,13 @@ public class UploadServiceImpl implements UploadService {
         }
 
         return coverFile;
+    }
+
+    // 辅助方法：字节转可读格式
+    private String formatSize(long bytes) {
+        if (bytes < 1024) return bytes + "B";
+        if (bytes < 1024 * 1024) return String.format("%.2fKB", bytes / 1024.0);
+        if (bytes < 1024 * 1024 * 1024) return String.format("%.2fMB", bytes / (1024.0 * 1024));
+        return String.format("%.2fGB", bytes / (1024.0 * 1024 * 1024));
     }
 }
