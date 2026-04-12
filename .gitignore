@@ -26,5 +26,8 @@ replay_pid*
 .idea/
 
 dataset/
+original_frames/
+salient_result/
+visualization_result/
 
 .vscode/
