@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import RecordFilters from '@/components/records/RecordFilters.vue'
 import RecordTable from '@/components/records/RecordTable.vue'
 import Pagination from '@/components/records/Pagination.vue'
@@ -10,7 +11,7 @@ interface Record {
   thumbnail?: string
   detectTime: string
   duration: string
-  status: 'completed' | 'processing' | 'failed'
+  status: 'completed' | 'processing' | 'pending' | 'failed'
 }
 
 // 模拟数据
@@ -83,10 +84,11 @@ const toggleSelectAll = () => {
   }
 }
 
+const router = useRouter()
+
 // 处理操作
 const viewResult = (id: string) => {
-  console.log('查看结果:', id)
-  // TODO: 跳转到结果页面
+  router.push(`/detect?result=${id}`)
 }
 
 const deleteRecord = (id: string) => {

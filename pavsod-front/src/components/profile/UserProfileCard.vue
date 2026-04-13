@@ -1,14 +1,21 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch, computed } from 'vue'
+import { useAuth } from '@/stores/auth'
+import { useHome } from '@/stores/home'
 
-interface Props {
-  username: string
-  userId: string
-  joinDate: string
-  avatar?: string
+const { user } = useAuth()
+const { registerDate } = useHome()
+
+const formatDate = (dateStr: string): string => {
+  const date = new Date(dateStr)
+  if (isNaN(date.getTime())) return dateStr
+  const year = date.getFullYear()
+  const month = String(date.getMonth() + 1).padStart(2, '0')
+  const day = String(date.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
 }
 
-const props = defineProps<Props>()
+const displayJoinDate = computed(() => registerDate.value ? formatDate(registerDate.value) : '-')
 
 const emit = defineEmits<{
   updateAvatar: [file: File]
@@ -16,7 +23,14 @@ const emit = defineEmits<{
 }>()
 
 const avatarInput = ref<HTMLInputElement | null>(null)
-const previewAvatar = ref<string | null>(props.avatar || null)
+const previewAvatar = ref<string | null>(user.value?.avatar || null)
+
+// 持久化头像变化时更新预览
+watch(() => user.value?.avatar, (newAvatar) => {
+  if (newAvatar) {
+    previewAvatar.value = newAvatar
+  }
+})
 
 const triggerAvatarUpload = () => {
   avatarInput.value?.click()
@@ -36,6 +50,9 @@ const handleAvatarChange = (event: Event) => {
     emit('updateAvatar', file)
   }
 }
+
+const displayName = user.value?.username || '未知用户'
+const displayId = user.value?.userId || '-'
 </script>
 
 <template>
@@ -49,7 +66,7 @@ const handleAvatarChange = (event: Event) => {
           class="avatar-image"
         />
         <div v-else class="avatar-placeholder">
-          {{ username.charAt(0).toUpperCase() }}
+          {{ displayName.charAt(0).toUpperCase() }}
         </div>
         <div class="avatar-overlay">
           <span>更换</span>
@@ -65,11 +82,11 @@ const handleAvatarChange = (event: Event) => {
     </div>
 
     <div class="info-section">
-      <h2 class="username">{{ username }}</h2>
+      <h2 class="username">{{ displayName }}</h2>
       <div class="meta-info">
-        <span class="meta-item">ID: {{ userId }}</span>
+        <span class="meta-item">ID: {{ displayId }}</span>
         <span class="meta-divider">·</span>
-        <span class="meta-item">注册于 {{ joinDate }}</span>
+        <span class="meta-item">注册于 {{ displayJoinDate }}</span>
       </div>
     </div>
 

@@ -7,12 +7,6 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const emit = defineEmits<{
-  changePassword: []
-  bindPhone: []
-  bindEmail: []
-}>()
-
 const maskPhone = (phone: string) => {
   return phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')
 }
@@ -38,9 +32,6 @@ const maskEmail = (email: string) => {
             {{ hasPassword ? '已设置' : '未设置' }}
           </span>
         </div>
-        <button class="security-action" @click="emit('changePassword')">
-          {{ hasPassword ? '修改' : '设置' }}
-        </button>
       </div>
 
       <!-- 手机绑定 -->
@@ -52,9 +43,6 @@ const maskEmail = (email: string) => {
             {{ phone ? maskPhone(phone) : '未绑定' }}
           </span>
         </div>
-        <button class="security-action" @click="emit('bindPhone')">
-          {{ phone ? '更换' : '绑定' }}
-        </button>
       </div>
 
       <!-- 邮箱绑定 -->
@@ -66,9 +54,6 @@ const maskEmail = (email: string) => {
             {{ email ? maskEmail(email) : '未绑定' }}
           </span>
         </div>
-        <button class="security-action" @click="emit('bindEmail')">
-          {{ email ? '更换' : '绑定' }}
-        </button>
       </div>
     </div>
   </div>

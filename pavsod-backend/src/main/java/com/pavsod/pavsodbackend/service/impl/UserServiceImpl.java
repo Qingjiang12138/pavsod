@@ -121,7 +121,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         data.put("week_count", week_count);
         data.put("2d_video_count", user.getTotal_2d_videos());
         data.put("3d_video_count", user.getTotal_3d_videos());
+        data.put("current_storage", user.getCurrent_storage());
+        data.put("max_storage", user.getMax_storage());
         data.put("last_records", last_records);
+        data.put("create_at", user.getCreated_at());
         
         return data;
     }

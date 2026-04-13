@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import VideoUpload from '@/components/detect/VideoUpload.vue'
 import ResultVideo from '@/components/detect/ResultVideo.vue'
 import LLMEvaluation from '@/components/detect/LLMEvaluation.vue'
@@ -7,6 +8,7 @@ import { getAIEvaluation, getDetectionResult } from '@/api/detect'
 import { useAuth } from '@/stores/auth'
 
 const { user } = useAuth()
+const route = useRoute()
 
 const VIDEO_ID_KEY = 'pavsod_current_video_id'
 const VIDEO_NAME_KEY = 'pavsod_current_video_name'
@@ -66,15 +68,19 @@ const handleUploadComplete = async (file: File, videoType: '2d' | 'panoramic', t
   await loadResultByVideoId(videoId)
 }
 
-// 页面加载时，尝试读取持久化的 videoId 并加载结果
+// 页面加载时，优先读取 URL 的 result 参数，否则回退到持久化的 videoId
 onMounted(() => {
+  const resultVideoId = route.query.result as string | undefined
   const savedVideoId = localStorage.getItem(VIDEO_ID_KEY)
   const savedVideoName = localStorage.getItem(VIDEO_NAME_KEY)
-  if (savedVideoId) {
-    if (savedVideoName) {
+
+  const videoId = resultVideoId || savedVideoId
+
+  if (videoId) {
+    if (savedVideoName && !resultVideoId) {
       currentVideoName.value = savedVideoName
     }
-    loadResultByVideoId(savedVideoId)
+    loadResultByVideoId(videoId)
   }
 })
 </script>

@@ -14,7 +14,7 @@ const { statsData, trendData, typeData, recentRecords, isLoading, error, loadHom
 const loadData = () => {
   if (user.value?.userId) {
     console.log('[HomeView] 加载数据，userId:', user.value.userId)
-    loadHomeData(user.value.userId)
+    loadHomeData(user.value.userId, true)
   } else {
     console.log('[HomeView] userId 不存在，跳过加载')
   }
@@ -29,7 +29,7 @@ onMounted(() => {
 watch(() => user.value?.userId, (newUserId) => {
   if (newUserId) {
     console.log('[HomeView] userId 变化，重新加载:', newUserId)
-    loadHomeData(newUserId)
+    loadHomeData(newUserId, true)
   }
 })
 

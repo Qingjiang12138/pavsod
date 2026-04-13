@@ -51,25 +51,22 @@ const router = createRouter({
 })
 
 // 路由守卫：检查登录状态
-router.beforeEach((to, from, next) => {
+router.beforeEach((to) => {
   // 如果路由标记为 public，直接放行
   if (to.meta.public) {
     // 已登录用户访问登录/注册页，跳转到首页
     if (isAuthenticated.value && (to.path === '/login' || to.path === '/register')) {
-      next('/')
-      return
+      return '/'
     }
-    next()
-    return
+    return true
   }
 
   // 需要登录的页面，检查登录状态
   if (!isAuthenticated.value) {
-    next('/login')
-    return
+    return '/login'
   }
 
-  next()
+  return true
 })
 
 export default router

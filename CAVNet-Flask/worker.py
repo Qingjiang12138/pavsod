@@ -374,7 +374,7 @@ def visualize_results(original_frames_dir, salient_result_dir, output_dir, alpha
     print(f"Visualization completed: {total_frames} frames saved to {output_dir}")
 
 
-def create_video_from_frames(frames_dir, output_path, fps, audio_path=None, codec='mp4v'):
+def create_video_from_frames(frames_dir, output_path, fps, audio_path=None, codec='avcl'):
     """
     将帧图片合成为视频，可选添加音频
 

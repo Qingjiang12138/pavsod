@@ -16,7 +16,7 @@ public class JWTUtil {
         String token = JWT.create()
                 .withIssuer("admin")//签发者
                 .withIssuedAt(new Date(System.currentTimeMillis()))
-                .withExpiresAt(new Date(System.currentTimeMillis() + 7200 * 1000))//token过期时间2h
+                .withExpiresAt(new Date(System.currentTimeMillis() + 6 * 3600 * 1000))//token过期时间6h
                 .withAudience("app")//校验jwt的一方
                 .withClaim("id",id)
                 .sign(algorithm);

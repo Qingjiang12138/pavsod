@@ -62,10 +62,24 @@ public class UserController {
             return Result.error("用户不存在");
     }
 
-    @GetMapping("/user/data")
-    public Result getUserData(@RequestBody Map<String,Object> userId){
+    @PostMapping("/user/data")
+    public Result getUserData(@RequestBody Map<String,Object> map){
         try {
-            User user = userService.getUserData((Long)userId.get("userId"));
+            Object userIdObj = map.get("userId");
+            Long userId = null;
+            if (userIdObj instanceof Number) {
+                userId = ((Number) userIdObj).longValue();
+            } else if (userIdObj instanceof String) {
+                try {
+                    userId = Long.parseLong((String) userIdObj);
+                } catch (NumberFormatException e) {
+                    return Result.error("用户ID格式错误");
+                }
+            }
+            if (userId == null) {
+                return Result.error("用户ID不能为空");
+            }
+            User user = userService.getUserData(userId);
             return Result.success(user);
         }
         catch (Exception e){

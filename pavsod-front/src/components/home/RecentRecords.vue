@@ -5,7 +5,7 @@ interface Record {
   id: string
   name: string
   date: string
-  status: 'completed' | 'processing' | 'failed'
+  status: 'pending' | 'processing' | 'completed' | 'failed'
   thumbnail?: string
 }
 
@@ -21,6 +21,7 @@ const props = withDefaults(defineProps<Props>(), {
 const statusMap = {
   completed: { text: '已完成', class: 'status-completed' },
   processing: { text: '处理中', class: 'status-processing' },
+  pending: { text: '待处理', class: 'status-pending' },
   failed: { text: '失败', class: 'status-failed' }
 }
 
@@ -208,6 +209,11 @@ const isEmpty = computed(() => {
 .status-processing {
   background: hsla(210, 80%, 45%, 0.15);
   color: hsla(210, 80%, 45%, 1);
+}
+
+.status-pending {
+  background: hsla(35, 90%, 50%, 0.15);
+  color: hsla(35, 90%, 50%, 1);
 }
 
 .status-failed {

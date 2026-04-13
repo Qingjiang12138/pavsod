@@ -7,7 +7,7 @@ interface Record {
   thumbnail?: string
   detectTime: string
   duration: string
-  status: 'completed' | 'processing' | 'failed'
+  status: 'completed' | 'processing' | 'pending' | 'failed'
 }
 
 interface Props {
@@ -35,6 +35,7 @@ const someSelected = computed(() => {
 const statusMap = {
   completed: { text: '已完成', class: 'status-completed' },
   processing: { text: '处理中', class: 'status-processing' },
+  pending: { text: '待处理', class: 'status-pending' },
   failed: { text: '失败', class: 'status-failed' }
 }
 </script>
@@ -116,6 +117,13 @@ const statusMap = {
                 disabled
               >
                 处理中
+              </button>
+              <button
+                v-else-if="record.status === 'pending'"
+                class="action-btn processing"
+                disabled
+              >
+                待处理
               </button>
               <button
                 v-else
@@ -312,6 +320,11 @@ td.col-action {
 .status-processing {
   background: hsla(210, 80%, 45%, 0.15);
   color: hsla(210, 80%, 45%, 1);
+}
+
+.status-pending {
+  background: hsla(35, 90%, 50%, 0.15);
+  color: hsla(35, 90%, 50%, 1);
 }
 
 .status-failed {

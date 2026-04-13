@@ -4,9 +4,9 @@ const emit = defineEmits<{
 }>()
 
 const links = [
-  { icon: '❓', label: '帮助中心', action: 'help' },
-  { icon: '💬', label: '意见反馈', action: 'feedback' },
-  { icon: 'ℹ️', label: '关于我们', action: 'about' }
+  { label: '帮助中心', action: 'help' },
+  { label: '意见反馈', action: 'feedback' },
+  { label: '关于系统', action: 'about' }
 ]
 </script>
 
@@ -20,7 +20,6 @@ const links = [
         class="link-btn"
         @click="$emit(link.action as any)"
       >
-        <span class="link-icon">{{ link.icon }}</span>
         <span class="link-label">{{ link.label }}</span>
         <span class="link-arrow">›</span>
       </button>

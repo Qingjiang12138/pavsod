@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 
 interface Props {
   originalUrl: string
@@ -28,6 +28,16 @@ watch(() => props.originalUrl, () => {
 watch(() => props.saliencyUrl, () => {
   saliencyLoaded.value = false
 })
+
+// 给 URL 加时间戳，绕过浏览器脏缓存（之前 CORS 失败留下的缓存条目）
+const bustCache = (url: string) => {
+  if (!url) return url
+  const separator = url.includes('?') ? '&' : '?'
+  return `${url}${separator}t=${Date.now()}`
+}
+
+const originalSrc = computed(() => bustCache(props.originalUrl))
+const saliencySrc = computed(() => bustCache(props.saliencyUrl))
 </script>
 
 <template>
@@ -40,12 +50,13 @@ watch(() => props.saliencyUrl, () => {
         <div class="video-wrapper">
           <video
             class="video-player"
-            :src="originalUrl"
+            :src="originalSrc"
             controls
             muted
             loop
             playsinline
-            @loadeddata="handleOriginalLoad"
+            @loadedmetadata="handleOriginalLoad"
+            @error="originalLoaded = true"
           ></video>
           <div v-if="!originalLoaded" class="video-loading">
             <span>加载中...</span>
@@ -61,12 +72,13 @@ watch(() => props.saliencyUrl, () => {
         <div class="video-wrapper">
           <video
             class="video-player saliency"
-            :src="saliencyUrl"
+            :src="saliencySrc"
             controls
             muted
             loop
             playsinline
-            @loadeddata="handleSaliencyLoad"
+            @loadedmetadata="handleSaliencyLoad"
+            @error="saliencyLoaded = true"
           ></video>
           <div v-if="!saliencyLoaded" class="video-loading">
             <span>加载中...</span>

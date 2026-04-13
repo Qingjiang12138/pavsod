@@ -23,6 +23,9 @@ export interface HomeData {
   week_count: number[] // 过去一周检测数量 [周一, 周二, ..., 周日]
   '2d_video_count': number
   '3d_video_count': number
+  current_storage?: number // 已用存储空间（字节）
+  max_storage?: number // 最大存储空间（字节）
+  create_at?: string // 用户注册日期
   last_records: RecentRecord[]
 }
 
@@ -96,13 +99,13 @@ const statsData = computed(() => {
   if (!homeData.value) return null
 
   const data = homeData.value
-  // total_time 是总计秒数*10，需要转换成小时
-  const hours = Math.round(data.total_time / 10 / 3600)
+  // total_time 是总计秒数*10，转换成分钟并保留一位小数
+  const minutes = parseFloat((data.total_time / 10 / 60).toFixed(1))
 
   return {
     total: { value: data.total_task, unit: '个' },
     monthly: { value: data.month_task, unit: '个' },
-    duration: { value: hours, unit: '小时' }
+    duration: { value: minutes, unit: '分钟' }
   }
 })
 
@@ -115,11 +118,16 @@ interface TrendItem {
 const trendData = computed<TrendItem[]>(() => {
   if (!homeData.value?.week_count) return []
 
-  const weekDays = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-  return homeData.value.week_count.map((count, index) => ({
-    date: weekDays[index] || '',
-    count: count || 0
-  }))
+  return homeData.value.week_count.map((count, index) => {
+    const d = new Date()
+    d.setDate(d.getDate() - (6 - index))
+    const month = (d.getMonth() + 1).toString().padStart(2, '0')
+    const day = d.getDate().toString().padStart(2, '0')
+    return {
+      date: `${month}-${day}`,
+      count: count || 0
+    }
+  })
 })
 
 // 计算属性：视频类型分布
@@ -132,12 +140,35 @@ const typeData = computed(() => {
   }
 })
 
+// 计算属性：注册日期
+const registerDate = computed(() => {
+  if (!homeData.value?.create_at) return null
+  return homeData.value.create_at
+})
+
+// 计算属性：用户统计数据（我的数据）
+const userStatsData = computed(() => {
+  if (!homeData.value) return null
+
+  const currentStorage = homeData.value.current_storage || 0
+  const maxStorage = homeData.value.max_storage || 10737418240 // 默认 10GB
+
+  return {
+    detectCount: homeData.value.total_task,
+    storageUsed: parseFloat((currentStorage / (1024 * 1024 * 1024)).toFixed(2)),
+    storageTotal: parseFloat((maxStorage / (1024 * 1024 * 1024)).toFixed(2))
+  }
+})
+
 // 计算属性：最近记录（转换格式适配组件）
 const recentRecords = computed(() => {
   if (!homeData.value) return []
 
-  const statusMap: Record<string, 'completed' | 'processing' | 'failed'> = {
-    '0': 'processing',
+  const statusMap: Record<string, 'pending' | 'processing' | 'completed' | 'failed'> = {
+    '0': 'pending',
+    '1': 'processing',
+    '2': 'completed',
+    '3': 'failed',
     'completed': 'completed',
     'failed': 'failed'
   }
@@ -183,6 +214,8 @@ export const useHome = () => {
     trendData,
     typeData,
     recentRecords,
+    registerDate,
+    userStatsData,
     loadHomeData,
     clearHomeData
   }

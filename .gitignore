@@ -3,6 +3,7 @@
 
 # Log file
 *.log
+*.mp4
 
 # BlueJ files
 *.ctxt
@@ -32,3 +33,6 @@ visualization_result/
 
 .vscode/
 CAV-Net_models/
+*.mp4 
+ 
+ 

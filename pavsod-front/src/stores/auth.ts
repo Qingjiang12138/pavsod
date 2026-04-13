@@ -12,6 +12,7 @@ const user = ref<{
   phone: string
   username: string
   avatar: string
+  email?: string
 } | null>(null)
 const token = ref<string>('')
 
@@ -39,7 +40,8 @@ const setAuth = (data: authApi.LoginResult | authApi.RegisterResult) => {
     userId: data.userId,
     phone: data.phone,
     username: data.username,
-    avatar: data.avatar
+    avatar: data.avatar,
+    email: (data as any).email || user.value?.email || ''
   }
   token.value = data.token
   // 保存到 localStorage
@@ -66,6 +68,20 @@ const logout = () => {
   localStorage.removeItem(STORAGE_KEY)
 }
 
+// 更新本地用户信息
+const updateUserInfo = (updates: Partial<{
+  userId: string
+  phone: string
+  username: string
+  avatar: string
+  email?: string
+}>) => {
+  if (user.value) {
+    user.value = { ...user.value, ...updates }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(user.value))
+  }
+}
+
 // Composable for use in components
 export const useAuth = () => {
   const router = useRouter()
@@ -85,6 +101,9 @@ export const useAuth = () => {
     logout: () => {
       logout()
       router.push('/login')
+    },
+    updateUserInfo: (updates: Parameters<typeof updateUserInfo>[0]) => {
+      updateUserInfo(updates)
     }
   }
 }
