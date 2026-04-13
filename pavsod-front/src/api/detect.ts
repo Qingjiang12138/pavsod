@@ -63,7 +63,7 @@ export async function uploadVideo(params: UploadVideoParams): Promise<UploadVide
 export async function getAIEvaluation(userId: string, videoId: string): Promise<AIEvaluationResult> {
   const token = localStorage.getItem('pavsod_token')
 
-  const response = await fetch(`${BASE_URL}/detect/ai?userId=${encodeURIComponent(userId)}&video_avatar=${encodeURIComponent(videoId)}`, {
+  const response = await fetch(`${BASE_URL}/detect/ai?userId=${encodeURIComponent(userId)}&video_id=${encodeURIComponent(videoId)}`, {
     method: 'GET',
     headers: {
       ...(token && { 'token': token }),
@@ -78,7 +78,7 @@ export async function getAIEvaluation(userId: string, videoId: string): Promise<
   }
 
   return {
-    videoAvatar: data.data.video_avatar,
+    videoAvatar: videoId,
     aiSuggestion: data.data.ai_suggestion,
   }
 }
