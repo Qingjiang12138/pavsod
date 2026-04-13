@@ -17,4 +17,5 @@ public class RecordInfo {
     private String video_url;
     private Integer video_status;
     private LocalDateTime task_create_at;
+    private Integer video_duration;
 }

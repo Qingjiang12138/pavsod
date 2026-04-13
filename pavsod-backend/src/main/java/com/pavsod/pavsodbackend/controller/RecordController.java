@@ -12,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -27,7 +29,13 @@ public class RecordController {
         try {
             log.info("接收到用户{}的分页记录查询请求", dto.getUserId());
             List<RecordInfo> record_list = recordService.getRecordPage(dto);
-            return Result.success(record_list);
+            Integer total = recordService.getRecordCount(dto.getUserId());
+
+            Map<String, Object> res = new HashMap<>();
+            res.put("record_list", record_list);
+            res.put("total", total);
+
+            return Result.success(res);
         }
         catch (Exception e){
             return Result.error();

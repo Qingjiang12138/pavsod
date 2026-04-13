@@ -13,7 +13,7 @@
 
             <!-- 按视频名称模糊查询 -->
             <if test="dto.find_name != null and dto.find_name != ''">
-                AND ov.video_name LIKE CONCAT('%', #{dto.find_name}, '%')
+                AND SUBSTRING(ov.video_name, 36) LIKE CONCAT('%', #{dto.find_name}, '%')
             </if>
 
             <!-- 按日期查询（精确匹配日期部分） -->
@@ -43,6 +43,17 @@
         <where>
             video_id = #{originalVideoId}
         </where>
+    </select>
+    <select id="getRecordCountByUserId" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM task
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="selectVideoDurationById" resultType="java.lang.Integer">
+        select duration
+        from original_video
+        where video_id = #{videoId}
     </select>
 
     <delete id="deleteOriginalVideoById">

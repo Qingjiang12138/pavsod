@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import RecordFilters from '@/components/records/RecordFilters.vue'
 import RecordTable from '@/components/records/RecordTable.vue'
 import Pagination from '@/components/records/Pagination.vue'
+import { useAuth } from '@/stores/auth'
+import { fetchRecords, type RecordItem } from '@/api/record'
 
-interface Record {
+interface VideoRecord {
   id: string
   name: string
   thumbnail?: string
@@ -14,17 +16,8 @@ interface Record {
   status: 'completed' | 'processing' | 'pending' | 'failed'
 }
 
-// 模拟数据
-const allRecords = ref<Record[]>([
-  { id: '1', name: 'concert_video_360.mp4', thumbnail: '', detectTime: '2025-03-17 14:30', duration: '05:23', status: 'completed' },
-  { id: '2', name: 'product_demo.mp4', thumbnail: '', detectTime: '2025-03-17 12:15', duration: '03:45', status: 'completed' },
-  { id: '3', name: 'vr_tour_panoramic.mp4', thumbnail: '', detectTime: '2025-03-16 18:20', duration: '12:08', status: 'processing' },
-  { id: '4', name: 'meeting_recording.mp4', thumbnail: '', detectTime: '2025-03-16 10:00', duration: '45:30', status: 'completed' },
-  { id: '5', name: 'sports_highlights.mp4', thumbnail: '', detectTime: '2025-03-15 16:45', duration: '08:15', status: 'failed' },
-  { id: '6', name: 'tutorial_video.mp4', thumbnail: '', detectTime: '2025-03-15 09:30', duration: '15:20', status: 'completed' },
-  { id: '7', name: 'interview_clip.mp4', thumbnail: '', detectTime: '2025-03-14 14:00', duration: '06:45', status: 'completed' },
-  { id: '8', name: 'gameplay_360.mp4', thumbnail: '', detectTime: '2025-03-14 11:20', duration: '22:10', status: 'processing' },
-])
+const { user } = useAuth()
+const router = useRouter()
 
 // 筛选状态
 const searchQuery = ref('')
@@ -33,37 +26,86 @@ const selectedDate = ref('')
 // 分页状态
 const currentPage = ref(1)
 const pageSize = ref(5)
+const totalRecords = ref(0)
+
+// 数据状态
+const allRecords = ref<VideoRecord[]>([])
+const isLoading = ref(false)
+const error = ref('')
 
 // 选中项
 const selectedIds = ref<string[]>([])
 
-// 过滤后的记录
-const filteredRecords = computed(() => {
-  let result = allRecords.value
+// 状态映射（与 stores/home.ts 保持一致）
+const statusMap: Record<string, 'pending' | 'processing' | 'completed' | 'failed'> = {
+  '0': 'pending',
+  '1': 'processing',
+  '2': 'completed',
+  '3': 'failed',
+  'completed': 'completed',
+  'failed': 'failed',
+  'pending': 'pending',
+  'processing': 'processing'
+}
 
-  // 搜索过滤
-  if (searchQuery.value) {
-    const query = searchQuery.value.toLowerCase()
-    result = result.filter(r => r.name.toLowerCase().includes(query))
+// 将秒数格式化为 mm:ss
+const formatDuration = (seconds: number): string => {
+  const m = Math.floor(seconds / 60)
+  const s = Math.floor(seconds % 60)
+  return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`
+}
+
+// 将后端记录转换为前端格式
+const mapRecord = (item: RecordItem): VideoRecord => {
+  const datePart = item.task_create_at ? item.task_create_at.slice(0, 10) : '-'
+  return {
+    id: String(item.video_id),
+    name: item.video_name,
+    thumbnail: item.video_cover || undefined,
+    detectTime: datePart,
+    duration: formatDuration(item.video_duration || 0),
+    status: statusMap[String(item.video_status)] || 'processing'
+  }
+}
+
+// 加载记录数据
+const loadRecords = async () => {
+  if (!user.value?.userId) {
+    error.value = '用户信息不存在'
+    return
   }
 
-  // 日期过滤
-  if (selectedDate.value) {
-    result = result.filter(r => r.detectTime.startsWith(selectedDate.value))
+  isLoading.value = true
+  error.value = ''
+
+  try {
+    const res = await fetchRecords({
+      userId: user.value.userId,
+      start_page: currentPage.value,
+      per_page: pageSize.value,
+      find_name: searchQuery.value || undefined,
+      find_date: selectedDate.value || undefined
+    })
+
+    allRecords.value = (res.record_list || []).map(mapRecord)
+    totalRecords.value = res.total || 0
+
+    // 如果当前页没有数据且不是第一页，自动回退到上一页
+    if (allRecords.value.length === 0 && currentPage.value > 1) {
+      currentPage.value--
+      await loadRecords()
+      return
+    }
+  } catch (err: any) {
+    error.value = err.message || '获取检测记录失败'
+    allRecords.value = []
+  } finally {
+    isLoading.value = false
   }
-
-  return result
-})
-
-// 分页后的记录
-const paginatedRecords = computed(() => {
-  const start = (currentPage.value - 1) * pageSize.value
-  const end = start + pageSize.value
-  return filteredRecords.value.slice(start, end)
-})
+}
 
 const totalPages = computed(() => {
-  return Math.ceil(filteredRecords.value.length / pageSize.value) || 1
+  return Math.ceil(totalRecords.value / pageSize.value) || 1
 })
 
 // 处理选择
@@ -77,14 +119,12 @@ const toggleSelect = (id: string) => {
 }
 
 const toggleSelectAll = () => {
-  if (selectedIds.value.length === paginatedRecords.value.length) {
+  if (selectedIds.value.length === allRecords.value.length) {
     selectedIds.value = []
   } else {
-    selectedIds.value = paginatedRecords.value.map(r => r.id)
+    selectedIds.value = allRecords.value.map(r => r.id)
   }
 }
-
-const router = useRouter()
 
 // 处理操作
 const viewResult = (id: string) => {
@@ -93,15 +133,32 @@ const viewResult = (id: string) => {
 
 const deleteRecord = (id: string) => {
   console.log('删除记录:', id)
+  // TODO: 接入删除接口
   allRecords.value = allRecords.value.filter(r => r.id !== id)
   selectedIds.value = selectedIds.value.filter(sid => sid !== id)
+}
+
+// 处理搜索
+const handleSearch = () => {
+  currentPage.value = 1
+  selectedIds.value = []
+  loadRecords()
 }
 
 // 处理分页
 const changePage = (page: number) => {
   currentPage.value = page
   selectedIds.value = []
+  loadRecords()
 }
+
+
+// 页面加载时获取数据
+onMounted(() => {
+  if (user.value?.userId) {
+    loadRecords()
+  }
+})
 </script>
 
 <template>
@@ -114,21 +171,26 @@ const changePage = (page: number) => {
     <RecordFilters
       :search-query="searchQuery"
       :selected-date="selectedDate"
-      @update-search="searchQuery = $event; currentPage = 1"
-      @update-date="selectedDate = $event; currentPage = 1"
+      @update-search="searchQuery = $event"
+      @search="handleSearch"
+      @update-date="selectedDate = $event"
     />
 
-    <RecordTable
-      :records="paginatedRecords"
-      :selected-ids="selectedIds"
-      @toggle-select="toggleSelect"
-      @toggle-select-all="toggleSelectAll"
-      @view-result="viewResult"
-      @delete="deleteRecord"
-    />
+    <div v-if="error" class="error-msg">{{ error }}</div>
+
+    <div class="table-wrapper" :class="{ loading: isLoading }">
+      <RecordTable
+        :records="allRecords"
+        :selected-ids="selectedIds"
+        @toggle-select="toggleSelect"
+        @toggle-select-all="toggleSelectAll"
+        @view-result="viewResult"
+        @delete="deleteRecord"
+      />
+    </div>
 
     <Pagination
-      :total="filteredRecords.length"
+      :total="totalRecords"
       :current-page="currentPage"
       :page-size="pageSize"
       :total-pages="totalPages"
@@ -158,5 +220,19 @@ const changePage = (page: number) => {
 .page-desc {
   color: var(--color-text);
   opacity: 0.8;
+}
+
+.error-msg {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  background: hsla(0, 70%, 50%, 0.1);
+  color: hsla(0, 70%, 50%, 1);
+  border-radius: 8px;
+  font-size: 0.875rem;
+}
+
+.table-wrapper.loading {
+  opacity: 0.6;
+  pointer-events: none;
 }
 </style>

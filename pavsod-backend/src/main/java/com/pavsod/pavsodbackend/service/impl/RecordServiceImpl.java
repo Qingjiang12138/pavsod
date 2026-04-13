@@ -44,6 +44,7 @@ public class RecordServiceImpl implements RecordService {
             recordInfo.setVideo_cover(recordMapper.selectVideoCoverById(record.getOriginal_video_id()));
             recordInfo.setVideo_status(record.getTask_status());
             recordInfo.setTask_create_at(record.getCreate_at());
+            recordInfo.setVideo_duration(recordMapper.selectVideoDurationById(record.getOriginal_video_id()));
 
             recordInfos.add(recordInfo);
         }
@@ -61,5 +62,11 @@ public class RecordServiceImpl implements RecordService {
 
         //删除task表的一条数据
         recordMapper.deleteTaskByUserIdAndOriginalVideoId(dto.getUserId(), dto.getVideo_id());
+    }
+
+    @Override
+    public Integer getRecordCount(Long userId) {
+
+        return recordMapper.getRecordCountByUserId(userId);
     }
 }

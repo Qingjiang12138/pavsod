@@ -25,4 +25,8 @@ public interface RecordMapper extends BaseMapper<Task> {
     void deleteSalientVideoByOriginalVideoId(Long videoId);
 
     void deleteTaskByUserIdAndOriginalVideoId(Long userId, Long videoId);
+
+    Integer getRecordCountByUserId(Long userId);
+
+    Integer selectVideoDurationById(Long videoId);
 }
