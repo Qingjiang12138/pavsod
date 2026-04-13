@@ -16,6 +16,17 @@ const videoType = ref<'2d' | 'panoramic'>('2d')
 const TARGET_FPS_OPTIONS = [30, 60, 120] as const
 const selectedFps = ref<number>(30)
 const originalFps = ref<number>(30)
+const isCustomFps = ref(false)
+const customFps = ref<number>(30)
+
+// 处理自定义帧率变化
+const handleCustomFpsChange = (e: Event) => {
+  const val = parseInt((e.target as HTMLInputElement).value, 10)
+  if (!isNaN(val) && val > 0) {
+    customFps.value = val
+    selectedFps.value = val
+  }
+}
 
 // 上传状态
 const uploadState = ref<'idle' | 'confirming' | 'uploading' | 'detecting' | 'completed'>('idle')
@@ -227,6 +238,8 @@ const resetUpload = () => {
   videoType.value = '2d'
   selectedFps.value = 30
   originalFps.value = 30
+  isCustomFps.value = false
+  customFps.value = 30
   showConfirmModal.value = false
   videoPreview.value = {
     thumbnail: '',
@@ -375,15 +388,32 @@ const resetUpload = () => {
                   :key="fps"
                   class="fps-option"
                   :class="{
-                    'active': selectedFps === fps,
+                    'active': selectedFps === fps && !isCustomFps,
                     'disabled': fps > originalFps
                   }"
                   :disabled="fps > originalFps"
-                  @click="selectedFps = fps"
+                  @click="isCustomFps = false; selectedFps = fps"
                 >
                   {{ fps }} FPS
                   <span v-if="fps > originalFps" class="fps-hint">超出原视频</span>
                 </button>
+                <button
+                  class="fps-option"
+                  :class="{ 'active': isCustomFps }"
+                  @click="isCustomFps = true; selectedFps = customFps"
+                >
+                  自定义
+                </button>
+              </div>
+              <div v-if="isCustomFps" class="custom-fps-input">
+                <input
+                  type="number"
+                  min="1"
+                  :value="customFps"
+                  @input="handleCustomFpsChange"
+                  placeholder="输入帧率"
+                />
+                <span>FPS</span>
               </div>
             </div>
           </div>
@@ -391,7 +421,8 @@ const resetUpload = () => {
           <!-- 提示信息 -->
           <div class="info-tips">
             <p>⚡ 检测后的视频将以 <strong>{{ selectedFps }} FPS</strong> 的帧率生成显著性热力图</p>
-            <p v-if="originalFps < 30" class="fps-warning">⚠️ 原视频帧率较低 ({{ originalFps }} FPS)，可能影响检测效果</p>
+            <p v-if="selectedFps > originalFps" class="fps-warning">⚠️ 目标帧率 ({{ selectedFps }} FPS) 超过原视频帧率 ({{ originalFps }} FPS)，可能影响检测效果</p>
+            <p v-else-if="originalFps < 30" class="fps-warning">⚠️ 原视频帧率较低 ({{ originalFps }} FPS)，可能影响检测效果</p>
           </div>
         </div>
 
@@ -842,6 +873,36 @@ const resetUpload = () => {
   font-size: 0.7rem;
   color: var(--color-text);
   opacity: 0.7;
+}
+
+.custom-fps-input {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.custom-fps-input input {
+  flex: 1;
+  max-width: 120px;
+  padding: 0.5rem 0.75rem;
+  background: var(--color-background);
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: var(--color-heading);
+  outline: none;
+}
+
+.custom-fps-input input:focus {
+  border-color: hsla(215, 80%, 45%, 1);
+}
+
+.custom-fps-input span {
+  font-size: 0.875rem;
+  color: var(--color-text);
+  opacity: 0.8;
 }
 
 .modal-footer {
