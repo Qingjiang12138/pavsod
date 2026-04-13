@@ -2,8 +2,8 @@
 database_opt = {
     "host": '127.0.0.1',
     "port": 3306,
-    "user": 'root',
-    "passwd": "lqj18340237677",
+    "user": '', #your dataset user
+    "passwd": "",#your dataset password
     "charset": "utf8",
     "db": 'pavsod_db'
 }
@@ -27,4 +27,9 @@ oss_opt = {
     "endpoint": "https://oss-cn-beijing.aliyuncs.com",
     "bucketName": "pavsod-oss",
     "region": "cn-beijing"
+}
+
+llm_opt = {
+    "api_key": "",#your aliyun api key
+    "base_url": ""#your aliyun base url
 }

@@ -584,6 +584,13 @@ def detect(video_url, fps):
         cursor.execute(update_task_salient_video_id_sql, (salient_id, original_video_id))
         conn.commit()
 
+        # Step 9: 获取AI评价
+        print("Getting AI evaluation")
+        ai_suggestion = llm_suggest(output_video_path)
+        print(f"AI evaluation: {ai_suggestion}")
+        cursor.execute("update task set ai_suggestion = %s where original_video_id = %s", (ai_suggestion, original_video_id))
+        conn.commit()
+
         cursor.close()
         conn.close()
 
