@@ -38,6 +38,12 @@ public class TokenFilter implements Filter {
             return;
         }
 
+        if(request.getMethod().contains("OPTIONS")){
+            log.info("options请求，放行");
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String token = request.getHeader("token");
 
         if(token == null || token.isEmpty()){

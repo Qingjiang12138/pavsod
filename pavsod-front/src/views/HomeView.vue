@@ -1,39 +1,44 @@
 <script setup lang="ts">
+import { onMounted, computed, watch } from 'vue'
 import StatsCard from '@/components/home/StatsCard.vue'
 import TrendChart from '@/components/home/TrendChart.vue'
 import TypeDistribution from '@/components/home/TypeDistribution.vue'
 import RecentRecords from '@/components/home/RecentRecords.vue'
+import { useAuth } from '@/stores/auth'
+import { useHome } from '@/stores/home'
 
-// 模拟数据 - 实际项目中应从 API 获取
-const statsData = {
-  total: { value: 128, trend: 12, unit: '个' },
-  monthly: { value: 12, trend: 20, unit: '个' },
-  quality: { value: 0.89, trend: 3, unit: '' },
-  duration: { value: 48, unit: '小时' }
+const { user } = useAuth()
+const { statsData, trendData, typeData, recentRecords, isLoading, error, loadHomeData } = useHome()
+
+// 加载首页数据
+const loadData = () => {
+  if (user.value?.userId) {
+    console.log('[HomeView] 加载数据，userId:', user.value.userId)
+    loadHomeData(user.value.userId)
+  } else {
+    console.log('[HomeView] userId 不存在，跳过加载')
+  }
 }
 
-const trendData = [
-  { date: '周一', count: 3 },
-  { date: '周二', count: 5 },
-  { date: '周三', count: 2 },
-  { date: '周四', count: 8 },
-  { date: '周五', count: 6 },
-  { date: '周六', count: 4 },
-  { date: '周日', count: 7 }
-]
+// onMounted 尝试加载
+onMounted(() => {
+  loadData()
+})
 
-const typeData = {
-  normal: 85,
-  panoramic: 43
-}
+// 监听 user 变化，有值后再加载
+watch(() => user.value?.userId, (newUserId) => {
+  if (newUserId) {
+    console.log('[HomeView] userId 变化，重新加载:', newUserId)
+    loadHomeData(newUserId)
+  }
+})
 
-const recentRecords = [
-  { id: '1', name: 'concert_video_360.mp4', date: '2小时前', status: 'completed' as const },
-  { id: '2', name: 'product_demo.mp4', date: '昨天', status: 'completed' as const },
-  { id: '3', name: 'vr_tour_panoramic.mp4', date: '3天前', status: 'processing' as const },
-  { id: '4', name: 'meeting_recording.mp4', date: '5天前', status: 'completed' as const },
-  { id: '5', name: 'sports_highlights.mp4', date: '1周前', status: 'failed' as const }
-]
+// 计算统计数据（添加默认值防止 null）
+const displayStats = computed(() => ({
+  total: statsData.value?.total ?? { value: 0, unit: '个' },
+  monthly: statsData.value?.monthly ?? { value: 0, unit: '个' },
+  duration: statsData.value?.duration ?? { value: 0, unit: '小时' }
+}))
 </script>
 
 <template>
@@ -53,26 +58,22 @@ const recentRecords = [
     <section class="stats-grid">
       <StatsCard
         label="累计检测视频"
-        :value="statsData.total.value"
-        :unit="statsData.total.unit"
-        :trend="statsData.total.trend"
-        trendLabel="较上月"
+        :value="displayStats.total.value"
+        :unit="displayStats.total.unit"
         icon="📊"
         color="blue"
       />
       <StatsCard
         label="本月检测"
-        :value="statsData.monthly.value"
-        :unit="statsData.monthly.unit"
-        :trend="statsData.monthly.trend"
-        trendLabel="较上月"
+        :value="displayStats.monthly.value"
+        :unit="displayStats.monthly.unit"
         icon="📈"
         color="green"
       />
       <StatsCard
         label="累计处理时长"
-        :value="statsData.duration.value"
-        :unit="statsData.duration.unit"
+        :value="displayStats.duration.value"
+        :unit="displayStats.duration.unit"
         icon="⏱️"
         color="orange"
       />
@@ -80,14 +81,24 @@ const recentRecords = [
 
     <!-- 图表区域 -->
     <section class="charts-grid">
-      <TrendChart :data="trendData" />
-      <TypeDistribution :normal="typeData.normal" :panoramic="typeData.panoramic" />
+      <TrendChart :data="trendData.length ? trendData : []" />
+      <TypeDistribution :normal="typeData?.normal ?? 0" :panoramic="typeData?.panoramic ?? 0" />
     </section>
 
     <!-- 最近记录 -->
     <section class="records-section">
-      <RecentRecords :records="recentRecords" />
+      <RecentRecords :records="recentRecords ?? []" />
     </section>
+
+    <!-- 加载状态 -->
+    <div v-if="isLoading" class="loading-overlay">
+      <div class="loading-spinner">加载中...</div>
+    </div>
+
+    <!-- 错误提示 -->
+    <div v-if="error" class="error-toast">
+      {{ error }}
+    </div>
   </div>
 </template>
 
@@ -180,5 +191,41 @@ const recentRecords = [
     width: 100%;
     justify-content: center;
   }
+}
+
+/* 加载状态 */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.loading-spinner {
+  padding: 1rem 2rem;
+  background: var(--color-background-soft);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+/* 错误提示 */
+.error-toast {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.75rem 1.5rem;
+  background: hsla(0, 70%, 50%, 0.9);
+  color: white;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  z-index: 1001;
 }
 </style>

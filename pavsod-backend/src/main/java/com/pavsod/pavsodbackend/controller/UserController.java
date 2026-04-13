@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -46,9 +47,12 @@ public class UserController {
             return Result.error("用户名或密码错误");
     }
 
-    @GetMapping("/home/data")
+    @PostMapping("/home/data")
     public Result getHomeData(@RequestBody Map<String, Object> map){
-        Long userId = (Long)map.get("userId");
+//        Long userId = (Long)map.get("userId");
+        Object userIdObj = map.get("userId");
+        Long userId = userIdObj instanceof Number ? ((Number) userIdObj).longValue() : null;
+
         Map<String, Object> data = userService.getHomeData(userId);
 
 

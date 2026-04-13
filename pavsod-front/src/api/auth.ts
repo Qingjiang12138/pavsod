@@ -15,8 +15,7 @@ async function request<T>(url: string, options: RequestInit): Promise<T> {
   const data = await response.json()
 
   if (!response.ok || data.code !== 200) {
-    const errorMsg = data.message || data.msg || '请求失败'
-    throw new Error(errorMsg)
+    throw new Error(data.message || '请求失败')
   }
 
   return data.data as T

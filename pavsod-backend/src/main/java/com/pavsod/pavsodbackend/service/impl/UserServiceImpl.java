@@ -83,6 +83,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public Map<String, Object> getHomeData(Long userId){
         Map<String, Object> data = new HashMap<>();
+        log.info("user:{}的查询请求",userId);
         User user = userMapper.selectByUserId(userId);
         log.info("user get home data:" + user.getTotal_2d_videos());
 
