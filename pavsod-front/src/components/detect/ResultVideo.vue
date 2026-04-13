@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
-// 视频源配置（从后端获取的实际视频URL）
-const originalVideoUrl = ref('/api/videos/original.mp4')
-const saliencyVideoUrl = ref('/api/videos/saliency.mp4')
+interface Props {
+  originalUrl: string
+  saliencyUrl: string
+}
+
+const props = defineProps<Props>()
 
 // 视频加载状态
 const originalLoaded = ref(false)
@@ -16,6 +19,15 @@ const handleOriginalLoad = () => {
 const handleSaliencyLoad = () => {
   saliencyLoaded.value = true
 }
+
+// URL 变化时重置加载状态
+watch(() => props.originalUrl, () => {
+  originalLoaded.value = false
+})
+
+watch(() => props.saliencyUrl, () => {
+  saliencyLoaded.value = false
+})
 </script>
 
 <template>
@@ -28,7 +40,7 @@ const handleSaliencyLoad = () => {
         <div class="video-wrapper">
           <video
             class="video-player"
-            :src="originalVideoUrl"
+            :src="originalUrl"
             controls
             muted
             loop
@@ -49,7 +61,7 @@ const handleSaliencyLoad = () => {
         <div class="video-wrapper">
           <video
             class="video-player saliency"
-            :src="saliencyVideoUrl"
+            :src="saliencyUrl"
             controls
             muted
             loop

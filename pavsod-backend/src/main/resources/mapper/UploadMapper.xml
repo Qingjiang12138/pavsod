@@ -38,6 +38,11 @@
         from user
         where id = #{userId}
     </select>
+    <select id="getOriginalVideoIdByVideoUrl" resultType="java.lang.Long">
+        select video_id
+        from original_video
+        where video_url = #{video_url}
+    </select>
 
     <insert id="insertTask" useGeneratedKeys="true" keyProperty="task_id">
         INSERT INTO task(

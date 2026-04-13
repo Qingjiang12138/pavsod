@@ -22,4 +22,6 @@ public interface UploadMapper extends BaseMapper<Original_video> {
     void userStorageAdd(Long userId, long videoSize);
 
     User selectUserById(Long userId);
+
+    Long getOriginalVideoIdByVideoUrl(String videoUrl);
 }

@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { uploadVideo } from '@/api/detect'
+import { useAuth } from '@/stores/auth'
+
+const { user } = useAuth()
 
 const emit = defineEmits<{
-  uploadComplete: [file: File, videoType: '2d' | 'panoramic', targetFps: number]
+  uploadComplete: [file: File, videoType: '2d' | 'panoramic', targetFps: number, videoId: string]
 }>()
 
 // 视频类型
@@ -140,37 +144,79 @@ const closeConfirmModal = () => {
 }
 
 // 确认上传
-const confirmUpload = () => {
-  showConfirmModal.value = false
-  startUpload()
-}
+const confirmUpload = async () => {
+  if (!selectedFile.value || !user.value?.userId) {
+    console.error('文件或用户信息不存在')
+    return
+  }
 
-// 开始上传
-const startUpload = () => {
+  showConfirmModal.value = false
   uploadState.value = 'uploading'
   uploadProgress.value = 0
 
-  // 模拟上传进度
-  const interval = setInterval(() => {
-    uploadProgress.value += 5
-    if (uploadProgress.value >= 100) {
-      clearInterval(interval)
-      startDetection()
-    }
-  }, 100)
-}
+  // 启动模拟进度条，缓慢增加到 90%
+  let progressInterval: ReturnType<typeof setInterval> | null = null
+  const startProgressSimulation = () => {
+    progressInterval = setInterval(() => {
+      if (uploadProgress.value < 90) {
+        // 越接近90增长速度越慢，结果取整
+        const remaining = 90 - uploadProgress.value
+        const increment = Math.max(1, Math.floor(remaining * 0.05))
+        uploadProgress.value = Math.min(90, uploadProgress.value + increment)
+      }
+    }, 200)
+  }
 
-// 开始检测
-const startDetection = () => {
-  uploadState.value = 'detecting'
-
-  // 模拟检测完成
-  setTimeout(() => {
-    uploadState.value = 'completed'
-    if (selectedFile.value) {
-      emit('uploadComplete', selectedFile.value, videoType.value, selectedFps.value)
+  // 停止模拟进度
+  const stopProgressSimulation = () => {
+    if (progressInterval) {
+      clearInterval(progressInterval)
+      progressInterval = null
     }
-  }, 2000)
+  }
+
+  try {
+    // 解析时长为秒数
+    const durationParts = videoPreview.value.duration.split(':')
+    const durationSeconds = parseInt(durationParts[0] || '0') * 60 + parseInt(durationParts[1] || '0')
+
+    // 开始模拟进度
+    startProgressSimulation()
+
+    // 调用真实上传接口
+    const result = await uploadVideo({
+      userId: user.value.userId,
+      video: selectedFile.value,
+      frame: selectedFps.value,
+      video_type: videoType.value,
+      duration: durationSeconds || 0
+    })
+
+    // 请求完成，停止模拟并拉满进度条
+    stopProgressSimulation()
+    uploadProgress.value = 100
+
+    console.log('[Upload] 上传成功:', result)
+
+    // 稍微延迟一下让用户看到 100%，然后进入检测状态
+    setTimeout(() => {
+      uploadState.value = 'detecting'
+    }, 300)
+
+    // 模拟检测过程（后端异步处理）
+    setTimeout(() => {
+      uploadState.value = 'completed'
+      if (selectedFile.value) {
+        emit('uploadComplete', selectedFile.value, videoType.value, selectedFps.value, result)
+      }
+    }, 2000)
+
+  } catch (error: any) {
+    stopProgressSimulation()
+    console.error('[Upload] 上传失败:', error)
+    alert('上传失败: ' + error.message)
+    resetUpload()
+  }
 }
 
 // 重置上传
@@ -251,7 +297,6 @@ const resetUpload = () => {
 
       <label for="video-upload" class="upload-label">
         <div class="upload-content">
-          <div class="upload-icon">📹</div>
           <div class="upload-text">
             <template v-if="uploadState === 'idle'">
               <p class="upload-main-text">拖拽视频到此处，或点击上传</p>
@@ -274,7 +319,7 @@ const resetUpload = () => {
               </div>
             </template>
             <template v-else-if="uploadState === 'completed'">
-              <p class="upload-main-text">✅ 检测完成: {{ selectedFile?.name }}</p>
+              <p class="upload-main-text">上传成功: {{ selectedFile?.name }}</p>
               <p class="upload-sub-text">点击下方按钮可重新上传</p>
             </template>
           </div>
@@ -601,7 +646,7 @@ const resetUpload = () => {
   background: var(--color-background-soft);
   border-radius: 16px;
   width: 100%;
-  max-width: 480px;
+  max-width: 560px;
   max-height: 90vh;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);

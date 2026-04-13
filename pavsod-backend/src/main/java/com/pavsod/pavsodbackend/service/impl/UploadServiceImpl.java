@@ -46,7 +46,7 @@ public class UploadServiceImpl implements UploadService {
     private UploadMapper uploadMapper;
 
     @Override
-    public String upload(Long userId, Integer frame, MultipartFile file, String video_type, Integer duration) throws Exception {
+    public Long upload(Long userId, Integer frame, MultipartFile file, String video_type, Integer duration) throws Exception {
         //用户表对应视频类型检测数量加一
         if(video_type.contains("2"))
             uploadMapper.user2dDetectCountAdd(userId);
@@ -112,8 +112,10 @@ public class UploadServiceImpl implements UploadService {
 
         //通知flask端开始处理
         notifyFlaskProcess(video_url, frame);
+        log.info("通知flask端开始处理");
 
-        return video_url;
+        Long video_id = uploadMapper.getOriginalVideoIdByVideoUrl(video_url);
+        return video_id;
     }
 
     /**

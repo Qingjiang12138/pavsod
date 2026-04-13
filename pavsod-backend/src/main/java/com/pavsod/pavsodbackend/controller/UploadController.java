@@ -31,8 +31,8 @@ public class UploadController {
         log.info("upload接收参数：{},{},{}",userId, frame, file);
 
         try {
-            String video_url = uploadService.upload(userId, frame, file, video_type, duration);
-            return Result.success(video_url);
+            Long videoId = uploadService.upload(userId, frame, file, video_type, duration);
+            return Result.success(videoId);
         }
         catch (Exception e){
             System.out.println(e.getMessage());
