@@ -589,7 +589,7 @@ def detect(video_url, fps):
         print("Getting AI evaluation")
         ai_suggestion = llm_suggest(salient_url)
         print(f"AI evaluation: {ai_suggestion}")
-        cursor.execute("update task set ai_suggestion = %s where original_video_id = %s", (ai_suggestion, original_video_id))
+        cursor.execute("update task set ai_suggest = %s where original_video_id = %s", (ai_suggestion, original_video_id))
         conn.commit()
 
         cursor.close()
