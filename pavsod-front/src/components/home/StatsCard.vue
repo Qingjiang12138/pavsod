@@ -5,7 +5,7 @@ interface Props {
   unit?: string
   trend?: number // 正数为增长，负数为下降
   trendLabel?: string
-  icon: string
+  icon?: string
   color?: 'blue' | 'green' | 'purple' | 'orange'
 }
 
@@ -23,7 +23,7 @@ const colorMap = {
 
 <template>
   <div class="stats-card">
-    <div class="card-icon" :style="{ background: colorMap[color] + '15', color: colorMap[color] }">
+    <div v-if="icon" class="card-icon" :style="{ background: colorMap[color] + '15', color: colorMap[color] }">
       {{ icon }}
     </div>
     <div class="card-content">

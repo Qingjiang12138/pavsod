@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+
 interface DayData {
   date: string
   count: number
@@ -9,19 +11,32 @@ interface Props {
   title?: string
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   title: '近7天检测趋势'
 })
 
 const maxValue = (data: DayData[]) => {
   return Math.max(...data.map(d => d.count), 1)
 }
+
+// 判断是否无数据（数组为空或所有 count 都为 0）
+const isEmpty = computed(() => {
+  return !props.data || props.data.length === 0 || props.data.every(d => d.count === 0)
+})
 </script>
 
 <template>
   <div class="trend-chart">
     <h3 class="chart-title">{{ title }}</h3>
-    <div class="chart-container">
+
+    <!-- 空状态 -->
+    <div v-if="isEmpty" class="empty-state">
+      <div class="empty-icon">📊</div>
+      <p class="empty-text">暂无检测数据</p>
+      <p class="empty-subtext">近7天没有检测记录</p>
+    </div>
+
+    <div v-else class="chart-container">
       <div class="chart-bars">
         <div
           v-for="item in data"
@@ -56,6 +71,34 @@ const maxValue = (data: DayData[]) => {
   font-weight: 600;
   color: var(--color-heading);
   margin-bottom: 1rem;
+}
+
+/* 空状态样式 */
+.empty-state {
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.empty-icon {
+  font-size: 2rem;
+  opacity: 0.4;
+}
+
+.empty-text {
+  font-size: 0.9rem;
+  color: var(--color-text);
+  opacity: 0.6;
+  font-weight: 500;
+}
+
+.empty-subtext {
+  font-size: 0.75rem;
+  color: var(--color-text);
+  opacity: 0.4;
 }
 
 .chart-container {

@@ -46,7 +46,7 @@ const displayStats = computed(() => ({
     <!-- 顶部欢迎区域 -->
     <header class="welcome-section">
       <div class="welcome-text">
-        <h1 class="welcome-title">欢迎回来 👋</h1>
+        <h1 class="welcome-title">欢迎回来</h1>
         <p class="welcome-desc">这是您今日的检测数据概览</p>
       </div>
       <router-link to="/detect" class="detect-btn">
@@ -60,21 +60,18 @@ const displayStats = computed(() => ({
         label="累计检测视频"
         :value="displayStats.total.value"
         :unit="displayStats.total.unit"
-        icon="📊"
         color="blue"
       />
       <StatsCard
         label="本月检测"
         :value="displayStats.monthly.value"
         :unit="displayStats.monthly.unit"
-        icon="📈"
         color="green"
       />
       <StatsCard
         label="累计处理时长"
         :value="displayStats.duration.value"
         :unit="displayStats.duration.unit"
-        icon="⏱️"
         color="orange"
       />
     </section>

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+
 interface Record {
   id: string
   name: string
@@ -12,7 +14,7 @@ interface Props {
   title?: string
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   title: '最近检测记录'
 })
 
@@ -21,6 +23,11 @@ const statusMap = {
   processing: { text: '处理中', class: 'status-processing' },
   failed: { text: '失败', class: 'status-failed' }
 }
+
+// 判断是否无数据
+const isEmpty = computed(() => {
+  return !props.records || props.records.length === 0
+})
 </script>
 
 <template>
@@ -29,7 +36,14 @@ const statusMap = {
       <h3 class="chart-title">{{ title }}</h3>
       <router-link to="/records" class="view-all">查看全部 →</router-link>
     </div>
-    <div class="records-list">
+    <!-- 空状态 -->
+    <div v-if="isEmpty" class="empty-state">
+      <div class="empty-icon">📝</div>
+      <p class="empty-text">暂无检测记录</p>
+      <p class="empty-subtext">开始您的第一次检测吧</p>
+    </div>
+
+    <div v-else class="records-list">
       <div
         v-for="record in records"
         :key="record.id"
@@ -64,6 +78,34 @@ const statusMap = {
   border-radius: 12px;
   padding: 1.25rem;
   border: 1px solid var(--color-border);
+}
+
+/* 空状态样式 */
+.empty-state {
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.empty-icon {
+  font-size: 2rem;
+  opacity: 0.4;
+}
+
+.empty-text {
+  font-size: 0.9rem;
+  color: var(--color-text);
+  opacity: 0.6;
+  font-weight: 500;
+}
+
+.empty-subtext {
+  font-size: 0.75rem;
+  color: var(--color-text);
+  opacity: 0.4;
 }
 
 .records-header {
