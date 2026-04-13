@@ -13,6 +13,7 @@ import tempfile
 import json
 import shutil
 import redis
+from llm_suggest import llm_suggest
 from aliyun import aliyunOssUpload
 
 
@@ -586,7 +587,7 @@ def detect(video_url, fps):
 
         # Step 9: 获取AI评价
         print("Getting AI evaluation")
-        ai_suggestion = llm_suggest(output_video_path)
+        ai_suggestion = llm_suggest(salient_url)
         print(f"AI evaluation: {ai_suggestion}")
         cursor.execute("update task set ai_suggestion = %s where original_video_id = %s", (ai_suggestion, original_video_id))
         conn.commit()
