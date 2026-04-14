@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue'
+import { ref, watch } from 'vue'
 
 interface Props {
   originalUrl: string
@@ -29,15 +29,31 @@ watch(() => props.saliencyUrl, () => {
   saliencyLoaded.value = false
 })
 
-// 给 URL 加时间戳，绕过浏览器脏缓存（之前 CORS 失败留下的缓存条目）
-const bustCache = (url: string) => {
-  if (!url) return url
-  const separator = url.includes('?') ? '&' : '?'
-  return `${url}${separator}t=${Date.now()}`
+// 双视频同步：以原始视频为主控
+const originalVideo = ref<HTMLVideoElement | null>(null)
+const saliencyVideo = ref<HTMLVideoElement | null>(null)
+
+const syncPlayPause = () => {
+  if (!originalVideo.value || !saliencyVideo.value) return
+  if (originalVideo.value.paused) {
+    saliencyVideo.value.pause()
+  } else {
+    saliencyVideo.value.play().catch(() => {})
+  }
 }
 
-const originalSrc = computed(() => bustCache(props.originalUrl))
-const saliencySrc = computed(() => bustCache(props.saliencyUrl))
+const syncSeek = () => {
+  if (!originalVideo.value || !saliencyVideo.value) return
+  saliencyVideo.value.currentTime = originalVideo.value.currentTime
+}
+
+const syncTime = () => {
+  if (!originalVideo.value || !saliencyVideo.value) return
+  const diff = Math.abs(originalVideo.value.currentTime - saliencyVideo.value.currentTime)
+  if (diff > 0.3) {
+    saliencyVideo.value.currentTime = originalVideo.value.currentTime
+  }
+}
 </script>
 
 <template>
@@ -49,14 +65,20 @@ const saliencySrc = computed(() => bustCache(props.saliencyUrl))
         <div class="video-label">原始视频</div>
         <div class="video-wrapper">
           <video
+            ref="originalVideo"
             class="video-player"
-            :src="originalSrc"
+            :src="originalUrl"
             controls
             muted
             loop
             playsinline
+            preload="metadata"
             @loadedmetadata="handleOriginalLoad"
             @error="originalLoaded = true"
+            @play="syncPlayPause"
+            @pause="syncPlayPause"
+            @seeked="syncSeek"
+            @timeupdate="syncTime"
           ></video>
           <div v-if="!originalLoaded" class="video-loading">
             <span>加载中...</span>
@@ -71,12 +93,14 @@ const saliencySrc = computed(() => bustCache(props.saliencyUrl))
         <div class="video-label">显著性检测</div>
         <div class="video-wrapper">
           <video
+            ref="saliencyVideo"
             class="video-player saliency"
-            :src="saliencySrc"
+            :src="saliencyUrl"
             controls
             muted
             loop
             playsinline
+            preload="metadata"
             @loadedmetadata="handleSaliencyLoad"
             @error="saliencyLoaded = true"
           ></video>
