@@ -25,7 +25,7 @@ const maskEmail = (email: string) => {
     <div class="security-list">
       <!-- 登录密码 -->
       <div class="security-item">
-        <div class="security-icon">🔐</div>
+        <div class="security-icon"></div>
         <div class="security-info">
           <span class="security-label">登录密码</span>
           <span class="security-status" :class="{ 'status-active': hasPassword }">
@@ -36,7 +36,7 @@ const maskEmail = (email: string) => {
 
       <!-- 手机绑定 -->
       <div class="security-item">
-        <div class="security-icon">📱</div>
+        <div class="security-icon"></div>
         <div class="security-info">
           <span class="security-label">手机号码</span>
           <span class="security-status" :class="{ 'status-active': phone }">
@@ -47,7 +47,7 @@ const maskEmail = (email: string) => {
 
       <!-- 邮箱绑定 -->
       <div class="security-item">
-        <div class="security-icon">✉️</div>
+        <div class="security-icon"></div>
         <div class="security-info">
           <span class="security-label">邮箱地址</span>
           <span class="security-status" :class="{ 'status-active': email }">

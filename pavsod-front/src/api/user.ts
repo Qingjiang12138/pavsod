@@ -57,3 +57,25 @@ export async function updateUser(params: UpdateUserParams): Promise<void> {
     body: JSON.stringify(params),
   })
 }
+
+// 上传头像（FormData，不走 JSON 请求封装）
+export async function uploadAvatar(userId: string, file: File): Promise<void> {
+  const token = localStorage.getItem('pavsod_token')
+  const formData = new FormData()
+  formData.append('id', userId)
+  formData.append('photo', file)
+
+  const response = await fetch(`${BASE_URL}/user/change/photo`, {
+    method: 'POST',
+    headers: {
+      ...(token && { token }),
+    },
+    body: formData,
+  })
+
+  const data = await response.json()
+  if (!response.ok || data.code !== 200) {
+    const errorMsg = data.message || data.msg || '上传头像失败'
+    throw new Error(errorMsg)
+  }
+}

@@ -121,7 +121,7 @@ onMounted(() => {
       <!-- 检测中提示 -->
       <div v-else-if="isProcessing" class="result-processing">
         <div class="processing-card">
-          <h3 class="processing-title">⏳ 检测进行中</h3>
+          <h3 class="processing-title">检测进行中</h3>
           <p class="processing-text">
             视频 <strong>"{{ currentVideoName || '当前视频' }}"</strong> 正在后台处理中，显著性检测结果尚未生成，请稍后再试。
           </p>

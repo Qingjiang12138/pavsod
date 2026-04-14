@@ -268,7 +268,7 @@ const resetUpload = () => {
             value="2d"
             name="videoType"
           />
-          <span class="option-icon">🎬</span>
+          <span class="option-icon"></span>
           <div class="option-text">
             <span class="option-title">2D 视频</span>
             <span class="option-desc">普通平面视频</span>
@@ -284,7 +284,7 @@ const resetUpload = () => {
             value="panoramic"
             name="videoType"
           />
-          <span class="option-icon">🌐</span>
+          <span class="option-icon"></span>
           <div class="option-text">
             <span class="option-title">全景视频</span>
             <span class="option-desc">360° VR 视频</span>
@@ -348,7 +348,7 @@ const resetUpload = () => {
     <div v-if="showConfirmModal" class="modal-overlay" @click.self="closeConfirmModal">
       <div class="modal-content">
         <div class="modal-header">
-          <h3 class="modal-title">📋 确认视频信息</h3>
+          <h3 class="modal-title">确认视频信息</h3>
           <button class="modal-close" @click="closeConfirmModal">✕</button>
         </div>
 
@@ -357,7 +357,6 @@ const resetUpload = () => {
           <div class="preview-thumbnail">
             <img v-if="videoPreview.thumbnail" :src="videoPreview.thumbnail" alt="视频封面" />
             <div v-else class="thumbnail-placeholder">
-              <span>🎬</span>
               <p>加载中...</p>
             </div>
           </div>
@@ -370,15 +369,15 @@ const resetUpload = () => {
             </div>
             <div class="info-item">
               <span class="info-label">视频时长</span>
-              <span class="info-value">⏱️ {{ videoPreview.duration }}</span>
+              <span class="info-value">{{ videoPreview.duration }}</span>
             </div>
             <div class="info-item">
               <span class="info-label">文件大小</span>
-              <span class="info-value">💾 {{ videoPreview.size }}</span>
+              <span class="info-value">{{ videoPreview.size }}</span>
             </div>
             <div class="info-item">
               <span class="info-label">视频类型</span>
-              <span class="info-value">{{ videoType === '2d' ? '🎬 2D视频' : '🌐 全景视频' }}</span>
+              <span class="info-value">{{ videoType === '2d' ? ' 2D视频' : ' 全景视频' }}</span>
             </div>
             <div class="info-item fps-selector">
               <span class="info-label">检测帧率</span>

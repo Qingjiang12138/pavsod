@@ -39,9 +39,28 @@ const editForm = ref({
 })
 
 // 处理头像更新
-const handleAvatarUpdate = (file: File) => {
-  console.log('上传头像:', file.name)
-  // TODO: 调用上传接口
+const isUploadingAvatar = ref(false)
+
+const handleAvatarUpdate = async (file: File) => {
+  if (!user.value?.userId) {
+    alert('用户信息不存在，无法上传头像')
+    return
+  }
+
+  isUploadingAvatar.value = true
+  try {
+    await userApi.uploadAvatar(user.value.userId, file)
+    // 后端不返回新头像 URL，重新拉取用户信息
+    const profile = await userApi.fetchUserProfile(user.value.userId)
+    if (profile.avatar) {
+      updateUserInfo({ avatar: profile.avatar })
+    }
+  } catch (err: any) {
+    console.error('上传头像失败:', err)
+    alert(err.message || '上传头像失败')
+  } finally {
+    isUploadingAvatar.value = false
+  }
 }
 
 // 打开编辑资料弹窗
@@ -252,7 +271,7 @@ const submitFeedback = async () => {
 
 // 关于我们弹窗
 const showAboutModal = ref(false)
-const sourceCodeUrl = ref('#') // TODO: 替换为真实的源代码仓库链接
+const sourceCodeUrl = ref('https://github.com/Qingjiang12138/pavsod') // TODO: 替换为真实的源代码仓库链接
 
 const handleAbout = () => {
   showAboutModal.value = true
@@ -520,7 +539,7 @@ onMounted(() => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <span>🌐 查看项目源码</span>
+                <span>查看项目源码</span>
                 <span class="link-arrow">→</span>
               </a>
               <p class="source-hint">请将链接替换为您的真实仓库地址</p>
