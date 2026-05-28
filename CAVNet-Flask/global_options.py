@@ -2,8 +2,8 @@
 database_opt = {
     "host": '127.0.0.1',
     "port": 3306,
-    "user": '', #your dataset user
-    "passwd": "",#your dataset password
+    "user": 'root',
+    "passwd": "lqj18340237677",
     "charset": "utf8",
     "db": 'pavsod_db'
 }
@@ -30,6 +30,6 @@ oss_opt = {
 }
 
 llm_opt = {
-    "api_key": "",#your aliyun api key
-    "base_url": ""#your aliyun base url
+    "api_key": "sk-89bd0549780846899e4dee903d2a4e54",
+    "base_url": "https://dashscope.aliyuncs.com/compatible-mode/v1"
 }
