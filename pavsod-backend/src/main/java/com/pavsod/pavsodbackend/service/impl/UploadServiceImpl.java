@@ -106,6 +106,7 @@ public class UploadServiceImpl implements UploadService {
         task.setTarget_fps(frame);
         task.setProcess_count(1);
         task.setTask_status(0);
+        task.setModel(0);
         task.setCreate_at(java.time.LocalDateTime.now());
         uploadMapper.insertTask(task);
         log.info("插入一条task数据");

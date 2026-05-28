@@ -1,0 +1,1 @@
+ (): 0.0308 mae || 0.4173 max-fm || 0.4107 mean-fm || 0.7241 max-Emeasure || 0.6861 mean-Emeasure || 0.6945 S-measure.

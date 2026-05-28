@@ -18,6 +18,7 @@ const selectedFps = ref<number>(30)
 const originalFps = ref<number>(30)
 const isCustomFps = ref(false)
 const customFps = ref<number>(30)
+const selectedModel = ref<'cavnet' | 'pavsodr'>('cavnet')
 
 // 处理自定义帧率变化
 const handleCustomFpsChange = (e: Event) => {
@@ -240,6 +241,7 @@ const resetUpload = () => {
   originalFps.value = 30
   isCustomFps.value = false
   customFps.value = 30
+  selectedModel.value = 'cavnet'
   showConfirmModal.value = false
   videoPreview.value = {
     thumbnail: '',
@@ -413,6 +415,27 @@ const resetUpload = () => {
                   placeholder="输入帧率"
                 />
                 <span>FPS</span>
+              </div>
+            </div>
+            <div class="info-item model-selector">
+              <span class="info-label">检测模型</span>
+              <div class="model-options">
+                <button
+                  class="model-option"
+                  :class="{ 'active': selectedModel === 'cavnet' }"
+                  @click="selectedModel = 'cavnet'"
+                >
+                  <span class="model-name">CAVNet</span>
+                  <span class="model-desc">对象级显著性检测</span>
+                </button>
+                <button
+                  class="model-option"
+                  :class="{ 'active': selectedModel === 'pavsodr' }"
+                  @click="selectedModel = 'pavsodr'"
+                >
+                  <span class="model-name">pavsodr</span>
+                  <span class="model-desc">实例级检测与排序</span>
+                </button>
               </div>
             </div>
           </div>
@@ -904,6 +927,54 @@ const resetUpload = () => {
   opacity: 0.8;
 }
 
+/* 模型选择器 */
+.model-selector {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.model-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.model-option {
+  padding: 0.75rem 0.875rem;
+  background: var(--color-background);
+  border: 2px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-heading);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.model-option:hover {
+  border-color: hsla(215, 80%, 45%, 0.5);
+}
+
+.model-option.active {
+  border-color: hsla(215, 80%, 45%, 1);
+  background: hsla(215, 80%, 45%, 0.1);
+}
+
+.model-name {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.model-desc {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--color-text);
+  opacity: 0.7;
+}
+
 .modal-footer {
   display: flex;
   gap: 0.75rem;
@@ -959,6 +1030,10 @@ const resetUpload = () => {
 
   .info-value {
     max-width: 100%;
+  }
+
+  .model-options {
+    grid-template-columns: 1fr;
   }
 }
 </style>

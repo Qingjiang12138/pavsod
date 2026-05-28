@@ -52,7 +52,8 @@
         target_fps,
         process_count,
         task_status,
-        create_at
+        create_at,
+        model
         ) VALUES (
         #{user_id},
         #{original_video_id},
@@ -60,7 +61,8 @@
         #{target_fps},
         #{process_count},
         #{task_status},
-        #{create_at}
+        #{create_at},
+        #{model}
         )
     </insert>
 </mapper>

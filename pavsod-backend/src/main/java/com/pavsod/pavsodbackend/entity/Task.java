@@ -22,4 +22,5 @@ public class Task {
     private Date end_time;
     private String error_msg;
     private LocalDateTime create_at;
+    private Integer model;
 }

@@ -1,0 +1,4 @@
+# ninja log v7
+0	9401	1774342065052796717	/data1/lqjiang/projects/pavsodr/mask2former/modeling/pixel_decoder/ops/build/temp.linux-x86_64-cpython-38/data1/lqjiang/projects/pavsodr/mask2former/modeling/pixel_decoder/ops/src/cpu/ms_deform_attn_cpu.o	23fffa9f3eda793
+1	24950	1774342065053796735	/data1/lqjiang/projects/pavsodr/mask2former/modeling/pixel_decoder/ops/build/temp.linux-x86_64-cpython-38/data1/lqjiang/projects/pavsodr/mask2former/modeling/pixel_decoder/ops/src/cuda/ms_deform_attn_cuda.o	df4983d7c59d346e
+1	28363	1774342065053796735	/data1/lqjiang/projects/pavsodr/mask2former/modeling/pixel_decoder/ops/build/temp.linux-x86_64-cpython-38/data1/lqjiang/projects/pavsodr/mask2former/modeling/pixel_decoder/ops/src/vision.o	88a3d18aa5a8651b

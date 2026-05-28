@@ -34,5 +34,5 @@ visualization_result/
 .vscode/
 CAV-Net_models/
 *.mp4 
- 
+*.pkl
  
